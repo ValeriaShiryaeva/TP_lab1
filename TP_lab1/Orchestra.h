@@ -9,10 +9,9 @@ using namespace std;
 class Orchestra // класс оркестр
 {
 protected:
-	string name; // название инструмента
-	double cost; // стоимость инструмента
+	string name; // название оркестра
 	int quantity; // количество единиц в оркестре
-	string name_owner; // имя владельца
+
 
 public:
 
