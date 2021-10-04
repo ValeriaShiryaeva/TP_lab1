@@ -1,5 +1,4 @@
 #pragma once
-//#include <iostream>
 #include <string>
 #include <cassert> // для assert()
 #include "Orchestra.h" 
@@ -13,33 +12,31 @@ private:
 
 public:
 	Кeeper():length(0), data(nullptr) {} // конструктор без параметров
-	Кeeper(int _length):length(_length) { // конструктор с параметрами
-
-		allocation_of_memory();
-
-		if (_length > 0)
-			data = new Orchestra[_length];
-		else
-			data = nullptr;
-	}
+	//Кeeper(int _length):length(_length) { // конструктор с параметрами
+	//	cout << "Создание оркестра" << endl;
+	//	length += 1;
+	//	Orchestra Or;
+	//	data = new Orchestra[1];
+	//	if (_length > 0)
+	//		data = new Orchestra[_length];
+	//	else
+	//		data = nullptr;
+	//	//Or.input_keyboard();
+	//	//Or.output_console();
+	//}
 
 	~Кeeper() {// декструктор (освобождение любой динамической памяти)
 		delete[] data;
 	}
 
-	void erase(); // деструктор всего массива
+	//void erase(); // деструктор всего массива
 
 	Orchestra& operator[](int index); // перегрузка оператора индексации
-
-	Orchestra& operator>> (Orchestra&);
-	Orchestra& operator<< (Orchestra&);
 
 	int getLength() { return length; } // получение длинны массива
 
 	void creat_container(); // создание контейнера	
 
 	void output_container(); // вывод содержимого контейнера 
-
-	Orchestra& allocation_of_memory(); // проверка длины контейнера
 };
 

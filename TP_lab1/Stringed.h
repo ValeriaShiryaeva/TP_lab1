@@ -1,11 +1,15 @@
-//#pragma once
-//#include "Orchestra.h"
-//class Stringed : // струнные инструменты
-//    public Orchestra
-//{
-//private:
-//    
-//    string name_manufacturer; // наименование производител€
-//    string description; // краткое описание
-//};
-//
+#pragma once
+#include <string>
+
+using namespace std;
+
+class Stringed // струнные инструменты
+{
+private:
+	string name; // название инструмента
+	string name_owner; // ‘»ќ владельца
+	string name_manufacturer; // наименование производител€
+	double cost; // стоимость инструмента
+	int quantity; // количество единиц в оркестре
+	string defects; // описание дефектов
+};

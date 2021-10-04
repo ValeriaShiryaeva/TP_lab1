@@ -1,41 +1,84 @@
 #include "Orchestra.h"
 
-void Orchestra::input_keyboard() { 
+Percussion& Orchestra::operator[](int index) {
+	if (index >= 0 && index < length_p);
+	return data_p[index];
+}
 
-	string _name, _quantity;
+void Orchestra::input_keyboard() {
+
+	string _name;
 	cout << "Введите название оркестра" << endl;
 	getline(cin, _name);
+	getline(cin, _name);
+
 	if (_name.find_first_not_of("qwertyuiopasdfghjklzxcvbnmWERTYUIOPASDFGHJKLZXCVBNM 1234567890") == string::npos)
 		name = _name;
 	else
 		name = "uncounted";
-	cout << "Введите возможное количество инструментов" << endl;
-	getline(cin, _quantity);
-	if (_quantity.find_first_not_of("0123456789", 0) == string::npos)
+
+	selecting_type_instrument();
+}
+
+void Orchestra::selecting_type_instrument() {
+	menu_selecting_type_instrument();
+	int punkt_menu;
+	cin >> punkt_menu;
+	switch (punkt_menu) // оператор switch 
 	{
-		quantity = stoi(_quantity);
+	case 1:
+		creat_percussion();
+		break;
 	}
-	else
-		quantity = 0;
+}
+
+void Orchestra::creat_percussion() {
+
+	Percussion* tmp = data_p;
+	length++;
+	length_p++;
+	Percussion Per;
+	data_p = new Percussion[length_p];
+	for (int i = 0; i < length_p - 1; i++)
+	{
+		data_p[i] = tmp[i];
+	}
+	data_p[length_p - 1] = Per;
+	data_p[length_p - 1].input_keyboard();
+}
+
+void Orchestra::menu_selecting_type_instrument() {
+	cout << "Выберите какой инструмент создать:" << endl;
+	cout << "1. Ударный" << endl;
+	cout << "2. Струнный" << endl;
+	cout << "3. Духовой" << endl;
 }
 
 void Orchestra::output_console() {
-
-	cout << "Название инструмента: " << name << endl;
-	cout << "Возможное количество инструментов: " << quantity << endl;
-}
-
-void Orchestra::output_to_file(ofstream& fout){
-	if (!fout.is_open())
+	cout << "Инструменты оркестра " << name << endl;
+	cout << "Ударные" << endl;
+	for (int i = 0; i < length_p; i++)
 	{
-		cout << "Файл Save_container.txt не открыт" << endl; // сообщение об ошибке открытия файла
-	}
-	else
-	{
-		fout << "Название инструмента: " << name << endl;
-		fout << "Возможное количество инструментов: " << quantity << endl;
+		cout << i + 1 << '.' << endl;
+		data_p[i].output_console();
 	}
 }
+
+void Orchestra::output_console_Orchestra_name() {
+	cout << name << endl;
+}
+
+
+//void Orchestra::output_to_file(ofstream& fout){
+//	if (!fout.is_open())
+//	{
+//		cout << "Файл Save_container.txt не открыт" << endl; // сообщение об ошибке открытия файла
+//	}
+//	else
+//	{
+//		fout << "Название инструмента: " << name << endl;
+//	}
+//}
 
 //void  Orchestra::input_from_file(ifstream& fin) {
 //	if (!fin)
