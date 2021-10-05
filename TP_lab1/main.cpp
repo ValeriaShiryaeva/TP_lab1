@@ -10,17 +10,18 @@ using namespace std;
 void menu();
 void print_menu();
 void choosing_orchestra();
-int repeat_input_number_orchestra();
-void input_number_orchestra();
+int repeat_input_number();
+bool intSigned(const string& );
+int input_number();
 
 ofstream fout("Save_container.txt");; // запись данных в файл (сохранение данных в файл)
 ifstream fin("Extract_container.txt");; // вывод данных из файла (восстановление данных из файла)
-
 
 void main()
 {
 	setlocale(LC_ALL, "rus"); // вывод русского языка в консоли
 
+	//Кeeper keeper(2);
 	while (1)
 	{
 		menu(); // вывод меню на экран
@@ -31,20 +32,18 @@ void main()
 void menu() // обработка меню
 {
 	print_menu(); // вывод меню на экран
-	int punkt_menu;
-	cout << "Введите пункт меню: ";
-	cin >> punkt_menu; 
-	cout << endl;
+	int punkt_menu = input_number();
 	switch (punkt_menu) // оператор switch 
 	{
 	case 1:
-		keeper.creat_container();
+		keeper.creat();
 		break;
 	case 2:
 		choosing_orchestra();
 		break;
 	case 3:
 		keeper.output_container();
+		break;
 	case 5: // выход из программы
 		exit(0);
 	}
@@ -63,33 +62,33 @@ void choosing_orchestra() {
 	cout << "Названия оркестров" << endl;
 	for (int i = 0; i < keeper.getLength(); i++)
 		cout << i + 1 << ". " << keeper[i].getName() << endl;
-	input_number_orchestra();
+	int number = input_number() - 1;
+	if (number <= keeper.getLength())
+		keeper[number].selecting_type_instrument();
 }
 
-void input_number_orchestra() {
-	int number_orchestra;
-	cout << "Ведите номер оркестра, в который хотите добавить инструмент: " << endl;
-	cin >> number_orchestra;
-	if (number_orchestra - 1 <= keeper.getLength())
-		keeper[number_orchestra].selecting_type_instrument();
-	else
-		repeat_input_number_orchestra();
-}
-
-int repeat_input_number_orchestra() {
-	cout << "Введено не верное название оркестра. Выберите действие:" << endl;
-	cout << "1. Повторить вввод названия оркестра" << endl;
-	cout << "2. Выйти из программы" << endl;
-	cout << "Введите номер действия: " << endl;
-	int punkt;
-	cin >> punkt;
-	switch (punkt) // оператор switch 
+int input_number() {
+	string number_s;
+	while (1)
 	{
-	case 1:
-		input_number_orchestra();
-	case 2:
-		exit(0);
+		cout << "Ведите номер: " << endl;
+		cin >> number_s;
+		if (intSigned(number_s) == true)
+		{
+			int number = stoi(number_s);
+			return number;
+		}
+		else
+			cout << "Введено не верное значение. Повторите ввод." << endl;
 	}
+}
+
+bool intSigned(const string& s) // проверка на только цифры в сроке
+{
+	if (s.find_first_not_of("0123456789", 0) == string::npos)
+		return true;
+	else
+		return false;
 }
 
 

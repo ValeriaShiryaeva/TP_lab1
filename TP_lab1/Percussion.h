@@ -17,47 +17,13 @@ private:
 public:
 
 	Percussion() : type("uncounted"), name("uncounted"), cost(0), quantity(0), name_owner("uncounted") {}
+
+	Percussion(string _type, string _name, double _cost, int _quantity, string _name_owner) :
+		type(_type), name(_name), cost(_cost), quantity(_quantity), name_owner(_name_owner) {
+			input_keyboard();
+	}
+
 	//template <typename T>
 	void input_keyboard();
 	void output_console();
 };
-
-/*template <typename T>
-void Percussion::input_keyboard() {
-
-	string _type, _name, _cost, _name_owner;
-
-	quantity += 1;
-
-	cout << "¬ведите тип ударного инструмента" << endl;
-	getline(cin, _type);
-	getline(cin, _type);
-	if (_type.find_first_not_of(letters_symbols) == string::npos)
-		type = _type;
-	else
-		type = "uncounted";
-
-	cout << "¬ведите название инструмента" << endl;
-	getline(cin, _name);
-	if (_name.find_first_not_of(letters_symbols) == string::npos)
-		name = _name;
-	else
-		name = "uncounted";
-
-	cout << "¬ведите цену инструмента" << endl;
-	getline(cin, _cost);
-	if (_cost.find_first_not_of(letters_symbols) == string::npos)
-	{
-		double tmp = stod(_cost);
-		cost = tmp;
-	}
-	else
-		cost = 0;
-
-	cout << "¬ведите им€ владельца" << endl;
-	getline(cin, _name_owner);
-	if (_name_owner.find_first_not_of(letters_symbols) == string::npos)
-		name_owner = _name_owner;
-	else
-		name_owner = "uncounted";
-}*/

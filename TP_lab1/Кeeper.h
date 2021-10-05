@@ -11,32 +11,34 @@ private:
 	Orchestra* data;
 
 public:
-	Кeeper():length(0), data(nullptr) {} // конструктор без параметров
-	//Кeeper(int _length):length(_length) { // конструктор с параметрами
-	//	cout << "Создание оркестра" << endl;
-	//	length += 1;
-	//	Orchestra Or;
-	//	data = new Orchestra[1];
-	//	if (_length > 0)
-	//		data = new Orchestra[_length];
-	//	else
-	//		data = nullptr;
-	//	//Or.input_keyboard();
-	//	//Or.output_console();
-	//}
+	Кeeper():length(0), data(nullptr) {} 
 
-	~Кeeper() {// декструктор (освобождение любой динамической памяти)
-		delete[] data;
+	Кeeper(int _length):length(_length) { 
+		for (int i = 0; i < length; i++)
+			creat();
 	}
 
-	//void erase(); // деструктор всего массива
+	Кeeper(const Кeeper& keeper) {
+		data = new Orchestra[keeper.length];
+		length = keeper.length;
+		for (int i = 0; i < keeper.length; i++)
+			data[i] = keeper.data[i];
+	}
+
+	~Кeeper() {	delete[] data;	}
+
+	Кeeper& operator=(const Кeeper&);
 
 	Orchestra& operator[](int index); // перегрузка оператора индексации
 
 	int getLength() { return length; } // получение длинны массива
 
-	void creat_container(); // создание контейнера	
+	void creat(); // создание контейнера	
+
+	void memory_allocation( Orchestra&);
 
 	void output_container(); // вывод содержимого контейнера 
+
+	//void erase(); // деструктор всего массива
 };
 

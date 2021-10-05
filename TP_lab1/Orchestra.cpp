@@ -5,19 +5,55 @@ Percussion& Orchestra::operator[](int index) {
 	return data_p[index];
 }
 
-void Orchestra::input_keyboard() {
+Orchestra& Orchestra::operator=(const Orchestra& Or)
+{
+	if (this == &Or)
+		return *this;
+	name = Or.name;
+	delete[] data_p;
+	data_p = new Percussion[Or.length_p];
+	length_p = Or.length_p;
+	for (int i = 0; i < Or.length_p; i++)
+		data_p[i] = Or.data_p[i];
+
+	delete[] data_s;
+	data_s = new Stringed[Or.length_s];
+	length_s = Or.length_s;
+	for (int i = 0; i < Or.length_s; i++)
+		data_s[i] = Or.data_s[i];
+
+	delete[] data_w;
+	data_w = new Wind[Or.length_w];
+	length_w = Or.length_w;
+	for (int i = 0; i < Or.length_w; i++)
+		data_w[i] = Or.data_w[i];
+
+	return *this;
+}
+
+void Orchestra::creat_orchestra() {
 
 	string _name;
 	cout << "Введите название оркестра" << endl;
 	getline(cin, _name);
 	getline(cin, _name);
-
 	if (_name.find_first_not_of("qwertyuiopasdfghjklzxcvbnmWERTYUIOPASDFGHJKLZXCVBNM 1234567890") == string::npos)
 		name = _name;
 	else
 		name = "uncounted";
-
+	//cout << name;
 	selecting_type_instrument();
+}
+
+void Orchestra::output_console() {
+	cout << "Инструменты оркестра " << name << endl;
+	cout << "Ударные" << endl;
+	for (int i = 0; i < length_p; i++)
+	{
+		cout << i + 1 << '.' << endl;
+		data_p[i].output_console();
+	}
+	cout << endl;
 }
 
 void Orchestra::selecting_type_instrument() {
@@ -34,17 +70,22 @@ void Orchestra::selecting_type_instrument() {
 
 void Orchestra::creat_percussion() {
 
-	Percussion* tmp = data_p;
-	length++;
-	length_p++;
 	Percussion Per;
+	Per.input_keyboard();
+	memory_allocation_percussion(Per);
+}
+
+void Orchestra::memory_allocation_percussion(Percussion& Per) {
+
+	Percussion* tmp = data_p;
+	//length++;
+	length_p++;
 	data_p = new Percussion[length_p];
 	for (int i = 0; i < length_p - 1; i++)
 	{
 		data_p[i] = tmp[i];
 	}
 	data_p[length_p - 1] = Per;
-	data_p[length_p - 1].input_keyboard();
 }
 
 void Orchestra::menu_selecting_type_instrument() {
@@ -54,19 +95,6 @@ void Orchestra::menu_selecting_type_instrument() {
 	cout << "3. Духовой" << endl;
 }
 
-void Orchestra::output_console() {
-	cout << "Инструменты оркестра " << name << endl;
-	cout << "Ударные" << endl;
-	for (int i = 0; i < length_p; i++)
-	{
-		cout << i + 1 << '.' << endl;
-		data_p[i].output_console();
-	}
-}
-
-void Orchestra::output_console_Orchestra_name() {
-	cout << name << endl;
-}
 
 
 //void Orchestra::output_to_file(ofstream& fout){

@@ -5,17 +5,37 @@ Orchestra& Êeeper::operator[](int index) {
         return data[index];
 }
 
-void Êeeper::creat_container() {
-    Orchestra* tmp = data;
-    length ++;
+Êeeper& Êeeper::operator=(const Êeeper& keeper)
+{
+	if (this == &keeper)
+		return *this;
+
+	delete[] data;
+    data = new Orchestra[keeper.length];
+	length = keeper.length;
+	for (int i = 0; i < keeper.length; i++)
+		data[i] = keeper.data[i];
+
+	return *this;
+}
+
+void Êeeper::creat() {
     Orchestra Or;
+    Or.creat_orchestra();
+    memory_allocation(Or);   
+}
+
+void Êeeper::memory_allocation( Orchestra& Or) {
+    cout << Or.getName();
+    Orchestra* tmp = data;
+    length++;
     data = new Orchestra[length];
     for (int i = 0; i < length - 1; i++)
     {
         data[i] = tmp[i];
     }
     data[length - 1] = Or;
-    data[length - 1].input_keyboard();
+    cout << data[length - 1].getName();
 }
 
 void Êeeper::output_container() {
@@ -23,24 +43,6 @@ void Êeeper::output_container() {
     for (int i = 0; i < getLength(); i++)
         data[i].output_console();
 }
-
-//bool srtSigned(const string& s) // ïðîâåðêà íà òîëüêî öèôðû â ñðîêå
-//{
-//    if (s.find_first_not_of("qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789", 0) == string::npos)
-//        return true;
-//    else
-//        return false;
-//}
-
-//bool intSigned(const string& s) // ïðîâåðêà íà òîëüêî öèôðû â ñðîêå
-//{
-//    if (s.find_first_not_of("0123456789", 0) == string::npos)
-//        return true;
-//    else
-//        return false;
-//}
-
-//bool srtSigned(const string&);
 
 //void Êeeper:: erase() { 
 //    delete[] data;

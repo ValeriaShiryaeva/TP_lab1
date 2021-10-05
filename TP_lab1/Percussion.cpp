@@ -3,12 +3,11 @@
 string letters_symbols = "qwertyuiopasdfghjklzxcvbnmWERTYUIOPASDFGHJKLZXCVBNM 1234567890";
 string numbers = "1234567890."; // вынести их в нормальное место
 
-
 void Percussion::input_keyboard() {
 
 	string _type, _name, _cost, _name_owner;
 
-	quantity ++;
+	quantity++; // понять куда это пихнуть, если не правильно работает
 
 	cout << "Введите тип ударного инструмента" << endl;
 	getline(cin, _type); // cinignor сделать почему-то
