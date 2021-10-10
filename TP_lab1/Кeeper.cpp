@@ -1,5 +1,25 @@
 #include "Êeeper.h"
 
+Êeeper::Êeeper() :length(0), data(nullptr) {}
+
+Êeeper::Êeeper(int _length) :length(_length) {
+    for (int i = 0; i < length; i++)
+        creat();
+}
+
+Êeeper::Êeeper(const Êeeper& keeper) {
+    data = new Orchestra[keeper.length];
+    length = keeper.length;
+    for (int i = 0; i < keeper.length; i++)
+        data[i] = keeper.data[i];
+}
+
+Êeeper::~Êeeper() {
+    delete[] data;
+    data = nullptr;
+    length = 0;
+}
+
 Orchestra& Êeeper::operator[](int index) {
     if(index >= 0 && index < length);
         return data[index];
@@ -26,7 +46,6 @@ void Êeeper::creat() {
 }
 
 void Êeeper::memory_allocation( Orchestra& Or) {
-    cout << Or.getName();
     Orchestra* tmp = data;
     length++;
     data = new Orchestra[length];
@@ -35,17 +54,34 @@ void Êeeper::memory_allocation( Orchestra& Or) {
         data[i] = tmp[i];
     }
     data[length - 1] = Or;
-    cout << data[length - 1].getName();
 }
 
-void Êeeper::output_container() {
-    cout << endl << "Ñîäåðæèìîå êîíòåéíåðà" << endl;
-    for (int i = 0; i < getLength(); i++)
-        data[i].output_console();
+void Êeeper::output_container_console() {
+    if (getLength() == 0) {
+        cout << "Êîíòåéíåð ïóñòîé" << endl << endl;
+    }
+    else {
+        cout << endl << "Ñîäåðæèìîå êîíòåéíåðà" << endl;
+        for (int i = 0; i < getLength(); i++)
+            data[i].output_console();
+    }    
 }
 
-//void Êeeper:: erase() { 
-//    delete[] data;
-//    length = 0;
-//    data = nullptr;
-//}
+void Êeeper::output_to_file(ofstream& fout) {
+    if (!fout.is_open())
+		cout << "Ôàéë Save_container.txt íå îòêðûò" << endl; 
+    else
+    {
+        if (getLength() == 0)
+            fout << "Êîíòåéíåð ïóñòîé";
+        else 
+        {
+            fout << "Ñîäåðæèìîå êîíòåéíåðà" << endl;
+            for (int i = 0; i < getLength(); i++)
+                data[i].output_to_file(fout);
+        }
+    }
+    
+}
+
+

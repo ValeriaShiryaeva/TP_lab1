@@ -1,5 +1,7 @@
 #include <iostream>
 #include <fstream>
+#include<windows.h>
+#include <stdio.h>
 using namespace std;
 
 #include "Orchestra.h"
@@ -10,30 +12,28 @@ using namespace std;
 void menu();
 void print_menu();
 void choosing_orchestra();
-int repeat_input_number();
 bool intSigned(const string& );
 int input_number();
 
-ofstream fout("Save_container.txt");; // запись данных в файл (сохранение данных в файл)
-ifstream fin("Extract_container.txt");; // вывод данных из файла (восстановление данных из файла)
+void menu_output();
+void print_menu_output();
+
+ifstream fin("Extract_container.txt"); // вывод данных из файла (восстановление данных из файла)
+
 
 void main()
 {
-	setlocale(LC_ALL, "rus"); // вывод русского языка в консоли
-
-	//Кeeper keeper(2);
+	setlocale(LC_ALL, "rus"); 
 	while (1)
 	{
-		menu(); // вывод меню на экран
+		menu(); 
 	}
 }
 
-
-void menu() // обработка меню
-{
-	print_menu(); // вывод меню на экран
+void menu(){
+	print_menu();
 	int punkt_menu = input_number();
-	switch (punkt_menu) // оператор switch 
+	switch (punkt_menu)
 	{
 	case 1:
 		keeper.creat();
@@ -42,7 +42,7 @@ void menu() // обработка меню
 		choosing_orchestra();
 		break;
 	case 3:
-		keeper.output_container();
+		menu_output();
 		break;
 	case 5: // выход из программы
 		exit(0);
@@ -54,17 +54,56 @@ void print_menu() // вывод меню на экран
 	cout << "Выберете пункт меню:" << endl;
 	cout << "	1. Создать оркестр" << endl;
 	cout << "	2. Создать инструмент оркестра" << endl;
-	cout << "	3. Вывести на экран все содерживмое контейнера" << endl;
+	cout << "	3. Вывести содержимое контейнера" << endl;
 	cout << "	5. Выход из программы" << endl;
 }
 
 void choosing_orchestra() {
-	cout << "Названия оркестров" << endl;
-	for (int i = 0; i < keeper.getLength(); i++)
-		cout << i + 1 << ". " << keeper[i].getName() << endl;
-	int number = input_number() - 1;
-	if (number <= keeper.getLength())
-		keeper[number].selecting_type_instrument();
+	if (keeper.getLength() == 0)
+		cout << "Вы не можете создать инструмент, сначала создайте оркестр" << endl;
+	else {
+		cout << "Названия оркестров" << endl;
+		for (int i = 0; i < keeper.getLength(); i++)
+			cout << i + 1 << ". " << keeper[i].getName() << endl;
+		while (1) { // возможно здесь будут проблемы (не могу понять)
+			int number = input_number();
+			if (number <= keeper.getLength() && number != 0)
+			{
+				keeper[number-1].selecting_type_instrument();
+				break;
+			}
+		}		
+	}
+}
+
+void print_menu_output() {
+	cout << "Выберите, куда вывести информацию" << endl;
+	cout << "1. В консоль" << endl;
+	cout << "2. В файл" << endl;
+}
+
+void menu_output() {
+	print_menu_output();
+	while (1)
+	{
+		int punkt_menu = input_number();
+		if (punkt_menu == 1 || punkt_menu == 2)
+		{
+			switch (punkt_menu)
+			{
+			case 1:
+				keeper.output_container_console();
+				break;
+			case 2:
+				ofstream fout("Save_container.txt");
+				keeper.output_to_file(fout);
+				cout << "Данные выведены в файл" << endl;
+				fout.close();
+				break;
+			}
+			break;
+		}		
+	}	
 }
 
 int input_number() {
@@ -90,8 +129,4 @@ bool intSigned(const string& s) // проверка на только цифры в сроке
 	else
 		return false;
 }
-
-
-
-
 

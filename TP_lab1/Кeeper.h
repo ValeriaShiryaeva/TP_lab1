@@ -11,34 +11,23 @@ private:
 	Orchestra* data;
 
 public:
-	Êeeper():length(0), data(nullptr) {} 
-
-	Êeeper(int _length):length(_length) { 
-		for (int i = 0; i < length; i++)
-			creat();
-	}
-
-	Êeeper(const Êeeper& keeper) {
-		data = new Orchestra[keeper.length];
-		length = keeper.length;
-		for (int i = 0; i < keeper.length; i++)
-			data[i] = keeper.data[i];
-	}
-
-	~Êeeper() {	delete[] data;	}
+	Êeeper();
+	Êeeper(int);
+	Êeeper(const Êeeper&);
+	~Êeeper();
 
 	Êeeper& operator=(const Êeeper&);
+	Orchestra& operator[](int); 
 
-	Orchestra& operator[](int index); // ïåðåãðóçêà îïåðàòîðà èíäåêñàöèè
-
-	int getLength() { return length; } // ïîëó÷åíèå äëèííû ìàññèâà
+	void setLength(int _length) {length = _length; }
+	int getLength() { return length; }
 
 	void creat(); // ñîçäàíèå êîíòåéíåðà	
 
 	void memory_allocation( Orchestra&);
 
-	void output_container(); // âûâîä ñîäåðæèìîãî êîíòåéíåðà 
+	void output_container_console();  
 
-	//void erase(); // äåñòðóêòîð âñåãî ìàññèâà
+	void output_to_file(ofstream&);
 };
 

@@ -1,7 +1,41 @@
 #include "Orchestra.h"
 
+int input_number();
+
+Orchestra::Orchestra() : length_p(0), length_s(0), length_w(0), data_p(nullptr), data_s(nullptr), data_w(nullptr) {}
+
+Orchestra::Orchestra(const Orchestra& Or) {
+	name = name;
+	data_p = new Percussion[Or.length_p];
+	length_p = Or.length_p;
+	for (int i = 0; i < Or.length_p; i++)
+		data_p[i] = Or.data_p[i];
+
+	data_s = new Stringed[Or.length_s];
+	length_s = Or.length_s;
+	for (int i = 0; i < Or.length_s; i++)
+		data_s[i] = Or.data_s[i];
+
+	data_w = new Wind[Or.length_w];
+	length_w = Or.length_w;
+	for (int i = 0; i < Or.length_w; i++)
+		data_w[i] = Or.data_w[i];
+}
+
+Orchestra::~Orchestra() {
+	delete[] data_p;
+	data_p = nullptr;
+	length_p = 0;
+	delete[] data_s;
+	data_s = nullptr;
+	length_s = 0;
+	delete[] data_w;
+	data_w = nullptr;
+	length_w = 0;
+}
+
 Percussion& Orchestra::operator[](int index) {
-	if (index >= 0 && index < length_p);
+	if (index >= 0 && index < getLength_p());
 	return data_p[index];
 }
 
@@ -9,22 +43,23 @@ Orchestra& Orchestra::operator=(const Orchestra& Or)
 {
 	if (this == &Or)
 		return *this;
-	name = Or.name;
+	setName(Or.name);
+
 	delete[] data_p;
 	data_p = new Percussion[Or.length_p];
-	length_p = Or.length_p;
+	setLength_p(Or.length_p);
 	for (int i = 0; i < Or.length_p; i++)
 		data_p[i] = Or.data_p[i];
 
 	delete[] data_s;
 	data_s = new Stringed[Or.length_s];
-	length_s = Or.length_s;
+	setLength_s(Or.length_s);
 	for (int i = 0; i < Or.length_s; i++)
 		data_s[i] = Or.data_s[i];
 
 	delete[] data_w;
 	data_w = new Wind[Or.length_w];
-	length_w = Or.length_w;
+	setLength_w(Or.length_w);
 	for (int i = 0; i < Or.length_w; i++)
 		data_w[i] = Or.data_w[i];
 
@@ -36,19 +71,24 @@ void Orchestra::creat_orchestra() {
 	string _name;
 	cout << "Введите название оркестра" << endl;
 	getline(cin, _name);
-	getline(cin, _name);
-	if (_name.find_first_not_of("qwertyuiopasdfghjklzxcvbnmWERTYUIOPASDFGHJKLZXCVBNM 1234567890") == string::npos)
-		name = _name;
-	else
-		name = "uncounted";
-	//cout << name;
+	while (1) {
+		getline(cin, _name);
+		if (_name.find_first_not_of(letters_symbols) == string::npos)
+		{
+			setName(_name);
+			break;
+		}
+		else
+			cout << "Не верное название оркестра, повторите ввод:"; 
+	}	
 	selecting_type_instrument();
 }
 
 void Orchestra::output_console() {
-	cout << "Инструменты оркестра " << name << endl;
+	cout << "Инструменты оркестра " << getName() << endl;
 	cout << "Ударные" << endl;
-	for (int i = 0; i < length_p; i++)
+	cout << "Колличество ударных в оркестре: " << getLength_p() << endl;
+	for (int i = 0; i < getLength_p(); i++)
 	{
 		cout << i + 1 << '.' << endl;
 		data_p[i].output_console();
@@ -56,36 +96,38 @@ void Orchestra::output_console() {
 	cout << endl;
 }
 
+void Orchestra::output_to_file(ofstream& fout) {
+	fout << "Инструменты оркестра " << getName() << endl;
+	fout << "Ударные" << endl;
+	fout << "Колличество ударных в оркестре: " << getLength_p() << endl;
+	for (int i = 0; i < getLength_p(); i++)
+	{
+		fout << i + 1 << '.' << endl;
+		data_p[i].output_to_file(fout);
+	}
+	fout << endl;
+}
+
 void Orchestra::selecting_type_instrument() {
 	menu_selecting_type_instrument();
-	int punkt_menu;
-	cin >> punkt_menu;
-	switch (punkt_menu) // оператор switch 
-	{
-	case 1:
-		creat_percussion();
-		break;
+	while (1) {
+		int punkt_menu = input_number();
+		if (punkt_menu == 1 || punkt_menu == 2 || punkt_menu == 3)
+		{
+			switch (punkt_menu) // оператор switch 
+			{
+			case 1:
+				creat_percussion();
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			}
+			break;
+		}
 	}
-}
-
-void Orchestra::creat_percussion() {
-
-	Percussion Per;
-	Per.input_keyboard();
-	memory_allocation_percussion(Per);
-}
-
-void Orchestra::memory_allocation_percussion(Percussion& Per) {
-
-	Percussion* tmp = data_p;
-	//length++;
-	length_p++;
-	data_p = new Percussion[length_p];
-	for (int i = 0; i < length_p - 1; i++)
-	{
-		data_p[i] = tmp[i];
-	}
-	data_p[length_p - 1] = Per;
+	
 }
 
 void Orchestra::menu_selecting_type_instrument() {
@@ -95,18 +137,25 @@ void Orchestra::menu_selecting_type_instrument() {
 	cout << "3. Духовой" << endl;
 }
 
+void Orchestra::creat_percussion() {
+	Percussion Per;
+	Per.input_keyboard();
+	memory_allocation_percussion(Per);
+}
+
+void Orchestra::memory_allocation_percussion(Percussion& Per) {
+
+	Percussion* tmp = data_p;
+	setLength_p(getLength_p() + 1);
+	data_p = new Percussion[getLength_p()];
+	for (int i = 0; i < getLength_p() - 1; i++)
+	{
+		data_p[i] = tmp[i];
+	}
+	data_p[getLength_p() - 1] = Per;
+}
 
 
-//void Orchestra::output_to_file(ofstream& fout){
-//	if (!fout.is_open())
-//	{
-//		cout << "Файл Save_container.txt не открыт" << endl; // сообщение об ошибке открытия файла
-//	}
-//	else
-//	{
-//		fout << "Название инструмента: " << name << endl;
-//	}
-//}
 
 //void  Orchestra::input_from_file(ifstream& fin) {
 //	if (!fin)
