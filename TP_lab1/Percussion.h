@@ -13,8 +13,7 @@ private:
 	double cost; // стоимость инструмента
 	string name_owner; // ФИО владельца
 
-	string letters_symbols = "qwertyuiopasdfghjklzxcvbnmWERTYUIOPASDFGHJKLZXCVBNM 1234567890";
-	string numbers_double = "1234567890."; // вынести их в нормальное место
+	
 public:
 
 	Percussion();
@@ -34,5 +33,14 @@ public:
 	void input_keyboard();
 	void output_console();
 
+	void inputType();
+	void inputName();
+	void inputCost();
+	void inputNameOwner();
+
 	void output_to_file(ofstream& fout);
+
+	void change();
+	void print_menu_change();
+
 };

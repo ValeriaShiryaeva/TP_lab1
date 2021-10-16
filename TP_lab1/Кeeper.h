@@ -22,12 +22,26 @@ public:
 	void setLength(int _length) {length = _length; }
 	int getLength() { return length; }
 
-	void creat(); // создание контейнера	
+	void creat(); 
 
 	void memory_allocation( Orchestra&);
 
 	void output_container_console();  
 
 	void output_to_file(ofstream&);
+
+	void delite_container();
+
+	void change_container();
+
+	void print_menu_change();
+
+	void choosing_orchestra();
+	
+	int choosing_change_orchestra();
+
+	void menu_change_orchestra();
+	void print_menu_change_orchestra();
+
 };
 

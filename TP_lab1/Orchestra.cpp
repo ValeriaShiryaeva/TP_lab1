@@ -67,7 +67,11 @@ Orchestra& Orchestra::operator=(const Orchestra& Or)
 }
 
 void Orchestra::creat_orchestra() {
+	inputName();
+	selecting_type_instrument();
+}
 
+void Orchestra::inputName() {
 	string _name;
 	cout << "Введите название оркестра" << endl;
 	getline(cin, _name);
@@ -79,9 +83,8 @@ void Orchestra::creat_orchestra() {
 			break;
 		}
 		else
-			cout << "Не верное название оркестра, повторите ввод:"; 
-	}	
-	selecting_type_instrument();
+			cout << "Не верное название оркестра, повторите ввод:";
+	}
 }
 
 void Orchestra::output_console() {
@@ -127,7 +130,6 @@ void Orchestra::selecting_type_instrument() {
 			break;
 		}
 	}
-	
 }
 
 void Orchestra::menu_selecting_type_instrument() {
@@ -149,10 +151,59 @@ void Orchestra::memory_allocation_percussion(Percussion& Per) {
 	setLength_p(getLength_p() + 1);
 	data_p = new Percussion[getLength_p()];
 	for (int i = 0; i < getLength_p() - 1; i++)
-	{
 		data_p[i] = tmp[i];
-	}
 	data_p[getLength_p() - 1] = Per;
+}
+
+
+void Orchestra::selecting_change_instrument() {
+	menu_selecting_type_instrument();
+	while (1) {
+		int punkt_menu = input_number();
+		if (punkt_menu == 1 || punkt_menu == 2 || punkt_menu == 3)
+		{
+			switch (punkt_menu) // оператор switch 
+			{
+			case 1:
+				selecting_percussion();
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			}
+			break;
+		}
+	}
+}
+
+void Orchestra::selecting_percussion() {
+	print_percussion();
+	cout << "Выбор ударного инструмента. ";
+	int number_percussion = input_number();
+	while (1) {
+		if (number_percussion > getLength_p() && number_percussion == 0)
+		{
+			cout << "Введен неверный номер ударного инструмента. Повторите ввод" << endl;
+			number_percussion = input_number();
+		}
+		else
+		{
+			data_p[number_percussion - 1].change();
+			break;
+		}
+	}
+}
+
+void  Orchestra::print_percussion() {
+	cout << "Ударные" << endl;
+	cout << "Колличество ударных в оркестре: " << getLength_p() << endl;
+	for (int i = 0; i < getLength_p(); i++)
+	{
+		cout << i + 1 << '.' << endl;
+		data_p[i].output_console();
+	}
+	cout << endl;
 }
 
 

@@ -11,42 +11,47 @@ using namespace std;
 
 void menu();
 void print_menu();
-void choosing_orchestra();
-bool intSigned(const string& );
-int input_number();
-
 void menu_output();
 void print_menu_output();
+bool intSigned(const string&);
+int input_number();
 
 ifstream fin("Extract_container.txt"); // вывод данных из файла (восстановление данных из файла)
-
 
 void main()
 {
 	setlocale(LC_ALL, "rus"); 
 	while (1)
-	{
-		menu(); 
-	}
+		menu();
 }
 
 void menu(){
 	print_menu();
 	int punkt_menu = input_number();
-	switch (punkt_menu)
-	{
-	case 1:
-		keeper.creat();
-		break;
-	case 2:
-		choosing_orchestra();
-		break;
-	case 3:
-		menu_output();
-		break;
-	case 5: // выход из программы
-		exit(0);
-	}
+	if (punkt_menu <= 6 && punkt_menu > 0) {
+		switch (punkt_menu)
+		{
+		case 1:
+			keeper.creat();
+			break;
+		case 2:
+			keeper.choosing_orchestra();
+			break;
+		case 3:
+			menu_output();
+			break;
+		case 4:
+			keeper.delite_container();
+			break;
+		case 5:
+			keeper.change_container();
+			break;
+		case 6: // выход из программы
+			exit(0);
+		}
+	} 
+	else
+		cout << "Введен не верный номер. " << endl;	
 }
 
 void print_menu() // вывод меню на экран
@@ -55,25 +60,9 @@ void print_menu() // вывод меню на экран
 	cout << "	1. Создать оркестр" << endl;
 	cout << "	2. Создать инструмент оркестра" << endl;
 	cout << "	3. Вывести содержимое контейнера" << endl;
-	cout << "	5. Выход из программы" << endl;
-}
-
-void choosing_orchestra() {
-	if (keeper.getLength() == 0)
-		cout << "Вы не можете создать инструмент, сначала создайте оркестр" << endl;
-	else {
-		cout << "Названия оркестров" << endl;
-		for (int i = 0; i < keeper.getLength(); i++)
-			cout << i + 1 << ". " << keeper[i].getName() << endl;
-		while (1) { // возможно здесь будут проблемы (не могу понять)
-			int number = input_number();
-			if (number <= keeper.getLength() && number != 0)
-			{
-				keeper[number-1].selecting_type_instrument();
-				break;
-			}
-		}		
-	}
+	cout << "	4. Удалить содержимое контейнера" << endl;
+	cout << "	5. Изменить содержимое контейнера" << endl;
+	cout << "	6. Выход из программы" << endl;
 }
 
 void print_menu_output() {

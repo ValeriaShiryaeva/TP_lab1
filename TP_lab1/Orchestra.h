@@ -55,6 +55,14 @@ public:
 
 	void output_to_file(ofstream&);
 
+	void selecting_change_instrument();
+
+	void selecting_percussion();
+
+	void print_percussion();
+
+	void inputName();
+
 	 //void input_from_file(ifstream&);
 	 //void output_to_file(ofstream&);
 
