@@ -2,11 +2,14 @@
 
 int input_number();
 
-Кeeper::Кeeper() :length(0), data(nullptr) {}
+Кeeper::Кeeper() :length(0), data(nullptr) {
+    cout << "The constructor is called Keeper" << endl;
+}
 
-Кeeper::Кeeper(int _length) :length(_length) {
+Кeeper::Кeeper(int _length) : length(_length) {
     for (int i = 0; i < length; i++)
         creat();
+    cout << "The constructor with parameters is called Keeper" << endl;
 }
 
 Кeeper::Кeeper(const Кeeper& keeper) {
@@ -14,12 +17,14 @@ int input_number();
     length = keeper.length;
     for (int i = 0; i < keeper.length; i++)
         data[i] = keeper.data[i];
+    cout << "The copy constructor is called Keeper" << endl;
 }
 
 Кeeper::~Кeeper() {
     delete[] data;
     data = nullptr;
     length = 0;
+    cout << "Destructor called Keeper" << endl;
 }
 
 Orchestra& Кeeper::operator[](int index) {
@@ -31,7 +36,6 @@ Orchestra& Кeeper::operator[](int index) {
 {
 	if (this == &keeper)
 		return *this;
-
 	delete[] data;
     data = new Orchestra[keeper.length];
 	length = keeper.length;
@@ -52,9 +56,7 @@ void Кeeper::memory_allocation( Orchestra& Or) {
     length++;
     data = new Orchestra[length];
     for (int i = 0; i < length - 1; i++)
-    {
         data[i] = tmp[i];
-    }
     data[length - 1] = Or;
 }
 
@@ -84,23 +86,18 @@ void Кeeper::output_to_file(ofstream& fout) {
             cout << "Содержимое контейнера выведено в файл" << endl << endl;
         }
     }
-    
 }
 
 int Кeeper::choosing_orchestra() {
-    if (getLength() == 0)
-        cout << "Вы не можете изменить инструмент, сначала создайте оркестр" << endl;
-    else {
-        cout << "Названия оркестров" << endl;
-        for (int i = 0; i < getLength(); i++)
-            cout << i + 1 << ". " << data[i].getName() << endl;
-        while (1) {
-            int number = input_number();
-            if (number <= getLength() && number != 0)
-                return number;
-            else {
-                cout << "Не верно введено значение. ";
-            }
+    cout << "Названия оркестров" << endl;
+    for (int i = 0; i < getLength(); i++)
+        cout << i + 1 << ". " << data[i].getName() << endl;
+    while (1) {
+        int number = input_number();
+        if (number <= getLength() && number != 0)
+            return number;
+        else {
+            cout << "Не верно введено значение. ";
         }
     }
 }
@@ -129,7 +126,6 @@ void Кeeper::delite_container() {
                     break;
                 case 3:
                     data[choosing_orchestra() - 1].selecting_delite_instrument();
-                    cout << "Инструмент оркеста удален" << endl;
                     break;
                 }
                 if (punkt_menu == 4)
@@ -152,7 +148,7 @@ void Кeeper::delite_one_orchestra(int number) {
     if (getLength() > 1) {
         Orchestra* tmp = new Orchestra[getLength() - 1];
         bool flag = 0;
-        for (int i = 0; i < getLength() - 1; i++)
+        for (int i = 0; i < getLength(); i++)
         {
             if (i != number && flag == 0)
                 tmp[i] = data[i];
@@ -180,12 +176,22 @@ void Кeeper::change_container() {
             switch (punkt_menu)
             {
             case 1:
-                data[choosing_orchestra() - 1].inputName();
-                cout << "Название оркестра изменено" << endl;
+                if (getLength() == 0)
+                    cout << "Количество оркестров равно 0, ничего изменть нельзя" << endl;
+                else
+                {
+                    data[choosing_orchestra() - 1].inputName();
+                    cout << "Название оркестра изменено" << endl;
+                }
                 break;
             case 2:
-                data[choosing_orchestra() - 1].selecting_change_instrument();
-                break;
+                if (getLength() == 0)
+                    cout << "Количество оркестров равно 0, ничего изменть нельзя" << endl;
+                else
+                {
+                    data[choosing_orchestra() - 1].selecting_change_instrument();
+                    break;
+                }
             }
             if(punkt_menu == 3)
                 break;

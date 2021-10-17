@@ -24,6 +24,7 @@ private:
 
 public:
 	Orchestra();
+	Orchestra(string, int, int, int);
 	Orchestra(const Orchestra&);
 	~Orchestra();
 

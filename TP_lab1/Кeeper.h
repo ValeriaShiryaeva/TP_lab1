@@ -37,8 +37,6 @@ public:
 
 	void change_container();
 	void print_menu_change();
-
-	//void menu_change_orchestra();
 	void print_menu_change_orchestra();
 };
 

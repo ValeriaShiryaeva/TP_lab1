@@ -2,7 +2,16 @@
 
 int input_number();
 
-Orchestra::Orchestra() : length_p(0), length_s(0), length_w(0), data_p(nullptr), data_s(nullptr), data_w(nullptr) {}
+Orchestra::Orchestra() : name("no"), length_p(0), length_s(0), length_w(0), data_p(nullptr), data_s(nullptr), data_w(nullptr) {
+	cout << "The constructor is called Orchestra" << endl;
+}
+ // доделать
+Orchestra::Orchestra(string _name, int _length_p, int _length_s, int _length_w) : 
+	name(_name), length_p(_length_p), length_s(_length_s), length_w(_length_w) {
+	for (int i = 0; i < length_p; i++)
+		creat_percussion();
+	cout << "The constructor with parameters is called Orchestra" << endl;
+}
 
 Orchestra::Orchestra(const Orchestra& Or) {
 	name = name;
@@ -20,6 +29,7 @@ Orchestra::Orchestra(const Orchestra& Or) {
 	length_w = Or.length_w;
 	for (int i = 0; i < Or.length_w; i++)
 		data_w[i] = Or.data_w[i];
+	cout << "The copy constructor is called Orchestra" << endl;
 }
 
 Orchestra::~Orchestra() {
@@ -32,6 +42,7 @@ Orchestra::~Orchestra() {
 	delete[] data_w;
 	data_w = nullptr;
 	length_w = 0;
+	cout << "Destructor called Orchestra" << endl;
 }
 
 Percussion& Orchestra::operator[](int index) {
@@ -155,7 +166,6 @@ void Orchestra::memory_allocation_percussion(Percussion& Per) {
 	data_p[getLength_p() - 1] = Per;
 }
 
-
 void Orchestra::selecting_change_instrument() {
 	menu_selecting_type_instrument();
 	while (1) {
@@ -165,7 +175,13 @@ void Orchestra::selecting_change_instrument() {
 			switch (punkt_menu) // оператор switch 
 			{
 			case 1:
-				data_p[choosing_percussion() - 1].change();
+				if (getLength_p() == 0)
+					cout << "Количество ударных равно 0, нельзя изменить" << endl;
+				else
+				{
+					data_p[choosing_percussion() - 1].change();
+					cout << "Инструмент оркеста удален" << endl;
+				}
 				break;
 			case 2:
 				break;
@@ -200,7 +216,13 @@ void Orchestra::selecting_delite_instrument() {
 			switch (punkt_menu) // оператор switch 
 			{
 			case 1:
-				delite_one_percussion(choosing_percussion());
+				if (getLength_p() == 0)
+					cout << "Количество ударных равно 0, нельзя удалить" << endl;
+				else
+				{
+					delite_one_percussion(choosing_percussion());
+					cout << "Инструмент оркеста удален" << endl;
+				}
 				break;
 			case 2:
 				break;
@@ -215,15 +237,11 @@ void Orchestra::selecting_delite_instrument() {
 void Orchestra::delite_one_percussion(int number) {
 	if (getLength_p() > 1) {
 		Percussion* tmp = new Percussion[getLength_p() - 1];
-		bool flag = 0;
-		for (int i = 0; i < getLength_p() - 1; i++)
+		int t = 0;
+		for (int i = 0; i < getLength_p()-1; i++)
 		{
-			if (i != number && flag == 0)
-				tmp[i] = data_p[i];
-			else {
-				tmp[i] = data_p[i++];
-				flag = 1;
-			}
+			if (i != number)
+				tmp[t++] = data_p[i];
 		}
 		setLength_p(getLength_p() - 1);
 		data_p = tmp;
@@ -233,7 +251,6 @@ void Orchestra::delite_one_percussion(int number) {
 		data_p = new Percussion[0];
 	}
 }
-
 
 void Orchestra::print_percussion() {
 	cout << "Ударные" << endl;

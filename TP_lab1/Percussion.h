@@ -18,7 +18,8 @@ public:
 
 	Percussion();
 	Percussion(string, string, double, int, string);
-	~Percussion() = default;
+	Percussion(const Percussion&);
+	~Percussion();
 
 	void setType(string _type) { type = _type; }
 	void setName(string _name) { name = _name; }

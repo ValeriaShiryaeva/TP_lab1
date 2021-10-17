@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Base.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Orchestra.cpp" />
     <ClCompile Include="Percussion.cpp" />
@@ -152,6 +153,7 @@
     <Text Include="Zadanie.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Base.h" />
     <ClInclude Include="Orchestra.h" />
     <ClInclude Include="Percussion.h" />
     <ClInclude Include="Stringed.h" />

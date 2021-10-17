@@ -5,11 +5,26 @@ string numbers_double = "1234567890."; // вынести их в нормальное место
 
 int input_number();
 
-Percussion::Percussion() : type("uncounted"), name("uncounted"), cost(0), name_owner("uncounted") {}
+Percussion::Percussion() : type("uncounted"), name("uncounted"), cost(0), name_owner("uncounted") {
+	cout << "The constructor is called Percussion" << endl;
+}
 
 Percussion::Percussion(string _type, string _name, double _cost, int _quantity, string _name_owner) :
 	type(_type), name(_name), cost(_cost), name_owner(_name_owner) {
 	input_keyboard();
+	cout << "The constructor with parameters is calledPercussion" << endl;
+}
+
+Percussion::Percussion(const Percussion& Per) {
+	setType(Per.type);
+	setName(Per.name);
+	setCost(Per.cost);
+	setNameOwer(Per.name_owner);
+	cout << "The copy constructor is called Percussion" << endl;
+}
+
+Percussion::~Percussion() {
+	cout << "Destructor called Percussion" << endl;
 }
 
 void Percussion::input_keyboard() {

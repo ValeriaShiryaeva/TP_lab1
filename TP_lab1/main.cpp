@@ -35,16 +35,25 @@ void menu(){
 			keeper.creat();
 			break;
 		case 2:
-			keeper[keeper.choosing_orchestra() - 1].selecting_type_instrument();
+			if (keeper.getLength() == 0)
+				cout << "¬ы не можете изменить инструмент, сначала создайте оркестр" << endl;
+			else
+				keeper[keeper.choosing_orchestra() - 1].selecting_type_instrument();
 			break;
 		case 3:
 			menu_output();
 			break;
 		case 4:
-			keeper.delite_container();
+			if (keeper.getLength() == 0)
+				cout << "¬ы не можете изменить инструмент, сначала создайте оркестр" << endl;
+			else
+				keeper.delite_container();
 			break;
 		case 5:
-			keeper.change_container();
+			if (keeper.getLength() == 0)
+				cout << "¬ы не можете изменить инструмент, сначала создайте оркестр" << endl;
+			else
+				keeper.change_container();
 			break;
 		case 6: // выход из программы
 			exit(0);
