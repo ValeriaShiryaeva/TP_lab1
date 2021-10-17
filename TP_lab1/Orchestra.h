@@ -2,14 +2,14 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-
+#include"Base.h"
 #include "Percussion.h"
 #include "Stringed.h"
 #include "Wind.h"
 
 using namespace std;
 
-class Orchestra // класс оркестр
+class Orchestra: public Base // класс оркестр
 {
 private:
 	string name; // название оркестра
@@ -40,35 +40,26 @@ public:
 	int getLength_s() { return length_p; }
 	int getLength_w() { return length_p; }
 
+	// работа с оркестром
 	void creat_orchestra();
-
 	void output_console();
-
-	void selecting_type_instrument();
-
-	void menu_selecting_type_instrument();
-
-	Percussion& operator[](int index);
-	
-	void creat_percussion();
-
-	void memory_allocation_percussion(Percussion&);
-
 	void output_to_file(ofstream&);
-
-	void selecting_change_instrument();
-
-	int choosing_percussion();
-
-	void print_percussion();
-
 	void inputName();
 
+	void menu_selecting_type_instrument();
+	void selecting_type_instrument();
+	void selecting_change_instrument();
 	void selecting_delite_instrument();
+
+	// работа с Percussion
+	Percussion& operator[](int index);
+	void creat_percussion();
+	void memory_allocation_percussion(Percussion&);
+	
+	int choosing_percussion();
+	void print_percussion();
 	void delite_one_percussion(int);
 
 	 //void input_from_file(ifstream&);
-	 //void output_to_file(ofstream&);
-
 };
 

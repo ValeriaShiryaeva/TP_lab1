@@ -5,7 +5,8 @@ int input_number();
 Orchestra::Orchestra() : name("no"), length_p(0), length_s(0), length_w(0), data_p(nullptr), data_s(nullptr), data_w(nullptr) {
 	cout << "The constructor is called Orchestra" << endl;
 }
- // доделать
+
+ // доделать для 2х других инструментов
 Orchestra::Orchestra(string _name, int _length_p, int _length_s, int _length_w) : 
 	name(_name), length_p(_length_p), length_s(_length_s), length_w(_length_w) {
 	for (int i = 0; i < length_p; i++)
@@ -180,7 +181,7 @@ void Orchestra::selecting_change_instrument() {
 				else
 				{
 					data_p[choosing_percussion() - 1].change();
-					cout << "Инструмент оркеста удален" << endl;
+					cout << "Инструмент оркеста изменен" << endl;
 				}
 				break;
 			case 2:
@@ -238,7 +239,7 @@ void Orchestra::delite_one_percussion(int number) {
 	if (getLength_p() > 1) {
 		Percussion* tmp = new Percussion[getLength_p() - 1];
 		int t = 0;
-		for (int i = 0; i < getLength_p()-1; i++)
+		for (int i = 0; i < getLength_p()-1; i++)// может быть косяк из-за -1, но без нее точно не работает
 		{
 			if (i != number)
 				tmp[t++] = data_p[i];

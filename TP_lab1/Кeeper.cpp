@@ -103,39 +103,35 @@ int Кeeper::choosing_orchestra() {
 }
 
 void Кeeper::delite_container() {
-    if (getLength() == 0) {
-        cout << "Вы не можете удалить контейнет и его содержимое. Контейнер пустой" << endl << endl;
-    }
-    else {
-        print_menu_delite();
-        while (1){
-            int punkt_menu = input_number();
-            if (punkt_menu == 1 || punkt_menu == 2 || punkt_menu == 3 || punkt_menu == 4)
+    print_menu_delite();
+    while (1) {
+        int punkt_menu = input_number();
+        if (punkt_menu == 1 || punkt_menu == 2 || punkt_menu == 3 || punkt_menu == 4)
+        {
+            switch (punkt_menu)
             {
-                switch (punkt_menu)
-                {
-                case 1:
-                    delete[] data;
-                    data = nullptr;
-                    length = 0;
-                    cout << "Контейнер удален" << endl;
-                    break;
-                case 2:
-                    delite_one_orchestra(choosing_orchestra());
-                    cout << "Оркестр удален" << endl;
-                    break;
-                case 3:
-                    data[choosing_orchestra() - 1].selecting_delite_instrument();
-                    break;
-                }
-                if (punkt_menu == 4)
-                    break;
+            case 1:
+                delete[] data;
+                data = nullptr;
+                length = 0;
+                cout << "Контейнер удален" << endl;
+                break;
+            case 2:
+                delite_one_orchestra(choosing_orchestra());
+                cout << "Оркестр удален" << endl;
+                break;
+            case 3:
+                data[choosing_orchestra() - 1].selecting_delite_instrument();
+                break;
             }
-            else
-                cout << "Не верно введен номер. ";
+            if (punkt_menu == 4)
+                break;
         }
+        else
+            cout << "Не верно введен номер. ";
     }
 }
+
 void Кeeper::print_menu_delite() {
     cout << "Что вы хотите удалить?" << endl;
     cout << "1. Удалить контейнер" << endl;

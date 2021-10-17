@@ -36,7 +36,7 @@ void menu(){
 			break;
 		case 2:
 			if (keeper.getLength() == 0)
-				cout << "¬ы не можете изменить инструмент, сначала создайте оркестр" << endl;
+				cout << "¬ы не можете создать инструмент, сначала создайте оркестр" << endl;
 			else
 				keeper[keeper.choosing_orchestra() - 1].selecting_type_instrument();
 			break;
@@ -45,13 +45,13 @@ void menu(){
 			break;
 		case 4:
 			if (keeper.getLength() == 0)
-				cout << "¬ы не можете изменить инструмент, сначала создайте оркестр" << endl;
+				cout << "¬ы не можете удалить контейнет и его содержимое.  онтейнер пустой" << endl;
 			else
 				keeper.delite_container();
 			break;
 		case 5:
 			if (keeper.getLength() == 0)
-				cout << "¬ы не можете изменить инструмент, сначала создайте оркестр" << endl;
+				cout << "¬ы не можете ничего изменить.  онтейнер пустой" << endl;
 			else
 				keeper.change_container();
 			break;
