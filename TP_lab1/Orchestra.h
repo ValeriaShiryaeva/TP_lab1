@@ -57,11 +57,14 @@ public:
 
 	void selecting_change_instrument();
 
-	void selecting_percussion();
+	int choosing_percussion();
 
 	void print_percussion();
 
 	void inputName();
+
+	void selecting_delite_instrument();
+	void delite_one_percussion(int);
 
 	 //void input_from_file(ifstream&);
 	 //void output_to_file(ofstream&);

@@ -23,25 +23,22 @@ public:
 	int getLength() { return length; }
 
 	void creat(); 
+	void memory_allocation(Orchestra&);
 
-	void memory_allocation( Orchestra&);
-
-	void output_container_console();  
-
+	void output_container_console();
 	void output_to_file(ofstream&);
 
+	int choosing_orchestra();
+
 	void delite_container();
+	void print_menu_delite();
+
+	void delite_one_orchestra(int);
 
 	void change_container();
-
 	void print_menu_change();
 
-	void choosing_orchestra();
-	
-	int choosing_change_orchestra();
-
-	void menu_change_orchestra();
+	//void menu_change_orchestra();
 	void print_menu_change_orchestra();
-
 };
 

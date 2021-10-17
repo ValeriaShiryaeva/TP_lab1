@@ -35,7 +35,7 @@ void menu(){
 			keeper.creat();
 			break;
 		case 2:
-			keeper.choosing_orchestra();
+			keeper[keeper.choosing_orchestra() - 1].selecting_type_instrument();
 			break;
 		case 3:
 			menu_output();

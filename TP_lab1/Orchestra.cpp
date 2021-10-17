@@ -133,7 +133,7 @@ void Orchestra::selecting_type_instrument() {
 }
 
 void Orchestra::menu_selecting_type_instrument() {
-	cout << "Выберите какой инструмент создать:" << endl;
+	cout << "Выберите инструмент:" << endl;
 	cout << "1. Ударный" << endl;
 	cout << "2. Струнный" << endl;
 	cout << "3. Духовой" << endl;
@@ -165,7 +165,7 @@ void Orchestra::selecting_change_instrument() {
 			switch (punkt_menu) // оператор switch 
 			{
 			case 1:
-				selecting_percussion();
+				data_p[choosing_percussion() - 1].change();
 				break;
 			case 2:
 				break;
@@ -177,25 +177,65 @@ void Orchestra::selecting_change_instrument() {
 	}
 }
 
-void Orchestra::selecting_percussion() {
+int Orchestra::choosing_percussion() {
 	print_percussion();
 	cout << "Выбор ударного инструмента. ";
 	int number_percussion = input_number();
 	while (1) {
-		if (number_percussion > getLength_p() && number_percussion == 0)
-		{
+		if (number_percussion <= getLength_p() && number_percussion != 0)
+			return number_percussion;
+		else {
 			cout << "Введен неверный номер ударного инструмента. Повторите ввод" << endl;
 			number_percussion = input_number();
 		}
-		else
+	}
+}
+
+void Orchestra::selecting_delite_instrument() {
+	menu_selecting_type_instrument();
+	while (1) {
+		int punkt_menu = input_number();
+		if (punkt_menu == 1 || punkt_menu == 2 || punkt_menu == 3)
 		{
-			data_p[number_percussion - 1].change();
+			switch (punkt_menu) // оператор switch 
+			{
+			case 1:
+				delite_one_percussion(choosing_percussion());
+				break;
+			case 2:
+				break;
+			case 3:
+				break;
+			}
 			break;
 		}
 	}
 }
 
-void  Orchestra::print_percussion() {
+void Orchestra::delite_one_percussion(int number) {
+	if (getLength_p() > 1) {
+		Percussion* tmp = new Percussion[getLength_p() - 1];
+		bool flag = 0;
+		for (int i = 0; i < getLength_p() - 1; i++)
+		{
+			if (i != number && flag == 0)
+				tmp[i] = data_p[i];
+			else {
+				tmp[i] = data_p[i++];
+				flag = 1;
+			}
+		}
+		setLength_p(getLength_p() - 1);
+		data_p = tmp;
+	}
+	else {
+		setLength_p(getLength_p() - 1);
+		data_p = new Percussion[0];
+	}
+}
+
+
+void Orchestra::print_percussion() {
 	cout << "Ударные" << endl;
 	cout << "Колличество ударных в оркестре: " << getLength_p() << endl;
 	for (int i = 0; i < getLength_p(); i++)
@@ -205,8 +245,6 @@ void  Orchestra::print_percussion() {
 	}
 	cout << endl;
 }
-
-
 
 //void  Orchestra::input_from_file(ifstream& fin) {
 //	if (!fin)

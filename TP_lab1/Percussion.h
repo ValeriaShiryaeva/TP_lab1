@@ -30,17 +30,15 @@ public:
 	double getCost() { return cost; }
 	string getNameOwer() { return name_owner; }
 
-	void input_keyboard();
-	void output_console();
-
 	void inputType();
 	void inputName();
 	void inputCost();
 	void inputNameOwner();
 
+	void input_keyboard();
+	void output_console();
 	void output_to_file(ofstream& fout);
 
 	void change();
 	void print_menu_change();
-
 };
