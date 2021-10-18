@@ -44,6 +44,8 @@ public:
 	void creat_orchestra();
 	void output_console();
 	void output_to_file(ofstream&);
+	void coding_to_file(ofstream&);
+	void input_from_file(ifstream&);
 	void inputName();
 
 	void menu_selecting_type_instrument();
@@ -60,6 +62,6 @@ public:
 	void print_percussion();
 	void delite_one_percussion(int);
 
-	 //void input_from_file(ifstream&);
+	
 };
 

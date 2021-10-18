@@ -36,6 +36,9 @@
     <ClCompile Include="Base.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="CoderDecoder.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Zadanie.txt">
@@ -45,6 +48,9 @@
       <Filter>Файлы ресурсов</Filter>
     </Text>
     <Text Include="Extract_container.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
+    <Text Include="Coding_container.txt">
       <Filter>Файлы ресурсов</Filter>
     </Text>
   </ItemGroup>
@@ -65,6 +71,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Base.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="CoderDecoder.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

@@ -99,7 +99,6 @@ void Percussion::inputNameOwner() {
 	}
 }
 
-
 void Percussion::output_console() {
 	cout << "Тип инструмента: " << getType() << endl;
 	cout << "Название инструмента: " << getName() << endl;
@@ -171,5 +170,83 @@ void Percussion::print_menu_change() {
 	cout << "5. Выход в главное меню" << endl;
 }
 
+void Percussion::input_from_file(ifstream& fin) {
 
+	string s;
 
+	if (s.find("Ударный"))
+	{
+		getline(fin, s);
+		getline(fin, s);
+		if (s.find("Тип инструмента:") != string::npos)
+		{
+			s = s.substr(s.find_last_of("Тип инструмента:") + 1);
+			if (s.find_first_not_of(letters_symbols) == string::npos)
+			{
+				setType(s);
+				cout << "Считан тип ударного иснтурмента" << endl;
+			}
+				
+			else
+				cout << "Не верно записан тип ударного инструмента" << endl;
+		}
+		else
+			cout << "Не найден тип ударного инструмента" << endl;
+
+		getline(fin, s);
+		if (s.find("Название инструмента:") != string::npos)
+		{
+			s = s.substr(s.find_last_of("Название инструмента:") + 1);
+			if (s.find_first_not_of(letters_symbols) == string::npos)
+			{
+				setName(s);
+				cout << "Считано название ударного иснтурмента" << endl;
+			}
+			else
+				cout << "Не верно записано название ударного инструмента" << endl;
+		}
+		else
+			cout << "Не найдено название ударного инструмента" << endl;
+
+		getline(fin, s);
+		if (s.find("Стоимость иснтурмента:") != string::npos) {
+			s = s.substr(s.find_last_of("Стоимость иснтурмента:") + 1);
+			if (s.find_first_not_of("0123456789", 0) == string::npos)
+			{
+				cost = stoi(s);
+				cout << "Считана стоимость ударного иснтурмента" << endl;
+			}				
+			else
+				cout << "Не верно записана стоимость ударного инструмента" << endl;
+		}
+		else
+			cout << "Не найдена стоимость ударного инструмента" << endl;
+
+		getline(fin, s);
+		if (s.find("ФИО владельца:") != string::npos)
+		{
+			s = s.substr(s.find_last_of("ФИО владельца:") + 1);
+			if (s.find_first_not_of(letters_symbols) == string::npos) {
+				name_owner = s;
+				cout << "Считано ФИО владельца  иснтурмента" << endl;
+			}				
+			else
+				cout << "Не верно записано ФИО владельца ударного инструмента" << endl;
+		}
+		else
+			cout << "Не найдено ФИО владельца ударного инструмента" << endl;
+	}
+	else
+		cout << "Не найдено ни одного ударного" << endl;
+}
+
+void Percussion::encrip_p() {
+	string cod_name = encrip(getName());
+}
+
+void Percussion::coding_to_file(ofstream& fout) {
+	fout << encrip("Тип инструмента: ") << encrip(type) << endl;
+	fout << encrip("Название инструмента: ") << encrip(name) << endl;
+	fout << encrip("Стоимость иснтрумента: ") << encrip(to_string(cost)) << endl;
+	fout << encrip("ФИО владельца: ") << encrip(name_owner);
+}

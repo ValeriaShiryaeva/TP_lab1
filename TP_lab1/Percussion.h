@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include"CoderDecoder.h"
 
 using namespace std;
 
@@ -37,9 +38,14 @@ public:
 	void inputNameOwner();
 
 	void input_keyboard();
+	void input_from_file(ifstream&);
 	void output_console();
 	void output_to_file(ofstream& fout);
+	void coding_to_file(ofstream& fout);
 
 	void change();
 	void print_menu_change();
+
+	//кодирование, декодирование
+	void encrip_p();
 };

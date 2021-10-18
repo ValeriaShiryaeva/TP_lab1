@@ -12,5 +12,6 @@ public:
 	virtual void creat_orchestra() = 0;
 	virtual void output_console() = 0;
 	virtual void output_to_file(ofstream&) = 0;
+	virtual void input_from_file(ifstream&) = 0;
 };
 

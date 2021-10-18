@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Base.cpp" />
+    <ClCompile Include="CoderDecoder.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Orchestra.cpp" />
     <ClCompile Include="Percussion.cpp" />
@@ -148,12 +149,14 @@
     <ClCompile Include="Кeeper.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Coding_container.txt" />
     <Text Include="Extract_container.txt" />
     <Text Include="Save_container.txt" />
     <Text Include="Zadanie.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Base.h" />
+    <ClInclude Include="CoderDecoder.h" />
     <ClInclude Include="Orchestra.h" />
     <ClInclude Include="Percussion.h" />
     <ClInclude Include="Stringed.h" />

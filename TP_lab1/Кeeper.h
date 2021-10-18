@@ -1,6 +1,8 @@
 #pragma once
+#include <iostream>
 #include <string>
-#include <cassert> // для assert()
+#include <fstream>
+#include"CoderDecoder.h"
 #include "Orchestra.h" 
 using namespace std;
 
@@ -26,7 +28,9 @@ public:
 	void memory_allocation(Orchestra&);
 
 	void output_container_console();
-	void output_to_file(ofstream&);
+	void output_to_file();
+	void input_from_file();
+	void coding_to_file();
 
 	int choosing_orchestra();
 
@@ -38,5 +42,7 @@ public:
 	void change_container();
 	void print_menu_change();
 	void print_menu_change_orchestra();
+
+	
 };
 

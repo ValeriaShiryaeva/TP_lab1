@@ -112,12 +112,12 @@ void Orchestra::output_console() {
 }
 
 void Orchestra::output_to_file(ofstream& fout) {
-	fout << "Инструменты оркестра " << getName() << endl;
+	fout << "Название оркестра: " << name << endl;
 	fout << "Ударные" << endl;
-	fout << "Колличество ударных в оркестре: " << getLength_p() << endl;
-	for (int i = 0; i < getLength_p(); i++)
+	fout << "Колличество ударных: " << length_p << endl;
+	for (int i = 0; i < length_p; i++)
 	{
-		fout << i + 1 << '.' << endl;
+		fout << "Ударный " << i + 1 << endl;
 		data_p[i].output_to_file(fout);
 	}
 	fout << endl;
@@ -158,13 +158,13 @@ void Orchestra::creat_percussion() {
 }
 
 void Orchestra::memory_allocation_percussion(Percussion& Per) {
-
 	Percussion* tmp = data_p;
-	setLength_p(getLength_p() + 1);
-	data_p = new Percussion[getLength_p()];
-	for (int i = 0; i < getLength_p() - 1; i++)
+	length_p++;
+	cout << length_p << endl;
+	data_p = new Percussion[length_p];
+	for (int i = 0; i < length_p - 1; i++)
 		data_p[i] = tmp[i];
-	data_p[getLength_p() - 1] = Per;
+	data_p[length_p - 1] = Per;
 }
 
 void Orchestra::selecting_change_instrument() {
@@ -221,7 +221,7 @@ void Orchestra::selecting_delite_instrument() {
 					cout << "Количество ударных равно 0, нельзя удалить" << endl;
 				else
 				{
-					delite_one_percussion(choosing_percussion());
+					delite_one_percussion(choosing_percussion() - 1);
 					cout << "Инструмент оркеста удален" << endl;
 				}
 				break;
@@ -236,21 +236,15 @@ void Orchestra::selecting_delite_instrument() {
 }
 
 void Orchestra::delite_one_percussion(int number) {
-	if (getLength_p() > 1) {
-		Percussion* tmp = new Percussion[getLength_p() - 1];
-		int t = 0;
-		for (int i = 0; i < getLength_p()-1; i++)// может быть косяк из-за -1, но без нее точно не работает
-		{
-			if (i != number)
-				tmp[t++] = data_p[i];
-		}
-		setLength_p(getLength_p() - 1);
-		data_p = tmp;
+	Percussion* tmp = new Percussion[length_p - 1];
+	int t = 0;
+	for (int i = 0; i < length_p; i++)
+	{
+		if (i != number)
+			tmp[t++] = data_p[i];
 	}
-	else {
-		setLength_p(getLength_p() - 1);
-		data_p = new Percussion[0];
-	}
+	length_p--;
+	data_p = tmp;
 }
 
 void Orchestra::print_percussion() {
@@ -264,76 +258,64 @@ void Orchestra::print_percussion() {
 	cout << endl;
 }
 
-//void  Orchestra::input_from_file(ifstream& fin) {
-//	if (!fin)
-//	{
-//		cout << "Файл Extract_container.txt не открыт" << endl; // сообщение об ошибке открытия файла
-//	}
-//	else
-//	{
-//		string _name, _cost, _quantity, _name_owner;
-//		string s ;
-//
-//		getline(fin, s);
-//		if (s.find(' ') != string::npos) {
-//			int namber = s.find(':');
-//			_name.append(s, namber+2, s.size() - namber - 1);
-//			if (_name.find_first_not_of("qwertyuiopasdfghjklzxcvbnmWERTYUIOPASDFGHJKLZXCVBNM ") == string::npos)
-//				name = _name;
-//			else 
-//				name = "uncounted";
-//		}
-//		else
-//		{
-//			name = "uncounted";
-//		}
-//
-//		getline(fin, s);
-//		if (s.find(' ') != string::npos) {
-//			int namber = s.find(':');
-//			_cost.append(s, namber + 2, s.size() - namber- 1);
-//			if (_cost.find_first_not_of("0123456789", 0) == string::npos)
-//			{
-//				cost = stoi(_cost);
-//			}
-//			else
-//				cost = 0;
-//		}
-//		else
-//		{
-//			cost = 0;
-//		}
-//
-//		getline(fin, s);
-//		if (s.find(' ') != string::npos) {
-//			int namber = s.find(':');
-//			_quantity.append(s, namber + 2, s.size() - namber - 1);
-//			if (_quantity.find_first_not_of("0123456789", 0) == string::npos)
-//			{
-//				quantity = stoi(_quantity);
-//			}
-//			else
-//				quantity = 0;
-//		}
-//		else
-//		{
-//			quantity = 0;
-//		}
-//
-//		getline(fin, s);
-//		if (s.find(' ') != string::npos) {
-//			int namber = s.find(':');
-//			_name_owner.append(s, namber + 2, s.size() - namber - 1);
-//			if (_name_owner.find_first_not_of("qwertyuiopasdfghjklzxcvbnmWERTYUIOPASDFGHJKLZXCVBNM ") == string::npos)
-//				name_owner = _name_owner;
-//			else
-//				name_owner = "uncounted";
-//		}
-//		else
-//		{
-//			name_owner = "uncounted";
-//		}
-//	}
-//
-//	
-//}
+void  Orchestra::input_from_file(ifstream& fin) {
+
+	string s;
+
+	getline(fin, s);
+	getline(fin, s);
+	if (s.find("Название оркестра:") != string::npos)
+	{
+		s = s.substr(s.find_last_of("Название оркестра:") + 1);
+		if (s.find_first_not_of("qwertyuiopasdfghjklzxcvbnmWERTYUIOPASDFGHJKLZXCVBNM 1234567890") == string::npos)
+		{
+			setName(s);
+			cout << "Найдено название оркестра" << endl;
+		}
+		else
+			cout << "Не верно записано название оркестра" << endl;
+	}
+	else
+		cout << "Не найдено название оркестра" << endl;
+	
+	fin >> s;
+	if (s == "Ударные")
+	{
+		getline(fin, s);
+		getline(fin, s);
+		if (s.find("Количество ударных:") != string::npos) {
+			s = s.substr(s.find_last_of("Количество ударных:") + 1);
+			if (s.find_first_not_of("1234567890") == string::npos)
+			{
+
+				int _length_p = stoi(s);
+				cout << "Найдено " << _length_p << "ударных" << endl;
+				for (int i = 0; i < _length_p; i++) 
+				{
+					Percussion Per;
+					Per.input_from_file(fin);
+					memory_allocation_percussion(Per);
+					cout << "Считан" << i + 1 << "ударный инструмент" << endl;
+				}
+			}
+			else
+				cout << "Не верно записано количество ударных инструментов" << endl;
+			cout << "Считаны ударные инструменты оркестра" << endl;
+		}
+		else
+			cout << "Не найдено количество ударных" << endl;
+	}
+	
+}
+
+void Orchestra::coding_to_file(ofstream& fout) {
+	fout << encrip("Название оркестра: ") << encrip(name) << endl;
+	fout << encrip("Ударные") << endl;
+	fout << encrip("Колличество ударных: ") << encrip(to_string(length_p)) << endl;
+	for (int i = 0; i < length_p; i++)
+	{
+		fout << encrip("Ударный ") << encrip(to_string(i + 1)) << endl;
+		data_p[i].coding_to_file(fout);
+	}
+	fout << endl;
+}

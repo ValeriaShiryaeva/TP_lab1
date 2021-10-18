@@ -18,7 +18,7 @@ int input_number();
 
 ifstream fin("Extract_container.txt"); // вывод данных из файла (восстановление данных из файла)
 
-void main()
+int main()
 {
 	setlocale(LC_ALL, "rus"); 
 	while (1)
@@ -28,7 +28,7 @@ void main()
 void menu(){
 	print_menu();
 	int punkt_menu = input_number();
-	if (punkt_menu <= 6 && punkt_menu > 0) {
+	if (punkt_menu <= 8 && punkt_menu > 0) {
 		switch (punkt_menu)
 		{
 		case 1:
@@ -41,21 +41,27 @@ void menu(){
 				keeper[keeper.choosing_orchestra() - 1].selecting_type_instrument();
 			break;
 		case 3:
-			menu_output();
+			keeper.input_from_file();
 			break;
 		case 4:
+			menu_output();
+			break;
+		case 5:
 			if (keeper.getLength() == 0)
 				cout << "Вы не можете удалить контейнет и его содержимое. Контейнер пустой" << endl;
 			else
 				keeper.delite_container();
 			break;
-		case 5:
+		case 6:
 			if (keeper.getLength() == 0)
 				cout << "Вы не можете ничего изменить. Контейнер пустой" << endl;
 			else
 				keeper.change_container();
 			break;
-		case 6: // выход из программы
+		case 7:
+			keeper.coding_to_file();
+			break;
+		case 8: // выход из программы
 			exit(0);
 		}
 	} 
@@ -68,10 +74,12 @@ void print_menu() // вывод меню на экран
 	cout << "Выберете пункт меню:" << endl;
 	cout << "	1. Создать оркестр" << endl;
 	cout << "	2. Создать инструмент оркестра" << endl;
-	cout << "	3. Вывести содержимое контейнера" << endl;
-	cout << "	4. Удалить содержимое контейнера" << endl;
-	cout << "	5. Изменить содержимое контейнера" << endl;
-	cout << "	6. Выход из программы" << endl;
+	cout << "	3. Считать данные из файла" << endl;
+	cout << "	4. Вывести содержимое контейнера" << endl;
+	cout << "	5. Удалить содержимое контейнера" << endl;
+	cout << "	6. Изменить содержимое контейнера" << endl;
+	cout << "	7. Закодировать содержимое контейнера " << endl;
+	cout << "	8. Выход из программы" << endl;
 }
 
 void print_menu_output() {
@@ -93,10 +101,7 @@ void menu_output() {
 				keeper.output_container_console();
 				break;
 			case 2:
-				ofstream fout("Save_container.txt");
-				keeper.output_to_file(fout);
-				cout << "Данные выведены в файл" << endl;
-				fout.close();
+				keeper.output_to_file();
 				break;
 			}
 			break;
