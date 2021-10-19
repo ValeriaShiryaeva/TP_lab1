@@ -28,7 +28,7 @@ int main()
 void menu(){
 	print_menu();
 	int punkt_menu = input_number();
-	if (punkt_menu <= 8 && punkt_menu > 0) {
+	if (punkt_menu <= 9 && punkt_menu > 0) {
 		switch (punkt_menu)
 		{
 		case 1:
@@ -61,7 +61,10 @@ void menu(){
 		case 7:
 			keeper.coding_to_file();
 			break;
-		case 8: // выход из программы
+		case 8: 
+			keeper.decoding_to_file();
+			break;
+		case 9: 
 			exit(0);
 		}
 	} 
@@ -78,8 +81,9 @@ void print_menu() // вывод меню на экран
 	cout << "	4. Вывести содержимое контейнера" << endl;
 	cout << "	5. Удалить содержимое контейнера" << endl;
 	cout << "	6. Изменить содержимое контейнера" << endl;
-	cout << "	7. Закодировать содержимое контейнера " << endl;
-	cout << "	8. Выход из программы" << endl;
+	cout << "	7. Закодировать содержимое контейнера в файл" << endl;
+	cout << "	8. Раскодировать содержимое файла в файл" << endl;
+	cout << "	9. Выход из программы" << endl;
 }
 
 void print_menu_output() {
@@ -98,7 +102,7 @@ void menu_output() {
 			switch (punkt_menu)
 			{
 			case 1:
-				keeper.output_container_console();
+				keeper.output_to_console();
 				break;
 			case 2:
 				keeper.output_to_file();

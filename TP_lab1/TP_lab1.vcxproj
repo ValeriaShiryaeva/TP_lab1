@@ -149,9 +149,10 @@
     <ClCompile Include="Кeeper.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Coding_container.txt" />
-    <Text Include="Extract_container.txt" />
-    <Text Include="Save_container.txt" />
+    <Text Include="Coding.txt" />
+    <Text Include="Decoding.txt" />
+    <Text Include="Input.txt" />
+    <Text Include="Saved.txt" />
     <Text Include="Zadanie.txt" />
   </ItemGroup>
   <ItemGroup>

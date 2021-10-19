@@ -2,6 +2,9 @@
 
 int input_number();
 
+string _string_signed = "qwertyuiopasdfghjklzxcvbnmWERTYUIOPASDFGHJKLZXCVBNM 1234567890";
+string _int_signed = "123456789";
+
 Orchestra::Orchestra() : name("no"), length_p(0), length_s(0), length_w(0), data_p(nullptr), data_s(nullptr), data_w(nullptr) {
 	cout << "The constructor is called Orchestra" << endl;
 }
@@ -89,13 +92,13 @@ void Orchestra::inputName() {
 	getline(cin, _name);
 	while (1) {
 		getline(cin, _name);
-		if (_name.find_first_not_of(letters_symbols) == string::npos)
+		if (_name.find_first_not_of(_string_signed) == string::npos)
 		{
 			setName(_name);
 			break;
 		}
 		else
-			cout << "Не верное название оркестра, повторите ввод:";
+			cout << "Не верное название оркестра, повторите ввод" << endl;
 	}
 }
 
@@ -129,7 +132,7 @@ void Orchestra::selecting_type_instrument() {
 		int punkt_menu = input_number();
 		if (punkt_menu == 1 || punkt_menu == 2 || punkt_menu == 3)
 		{
-			switch (punkt_menu) // оператор switch 
+			switch (punkt_menu) 
 			{
 			case 1:
 				creat_percussion();
@@ -261,13 +264,12 @@ void Orchestra::print_percussion() {
 void  Orchestra::input_from_file(ifstream& fin) {
 
 	string s;
-
 	getline(fin, s);
 	getline(fin, s);
 	if (s.find("Название оркестра:") != string::npos)
 	{
-		s = s.substr(s.find_last_of("Название оркестра:") + 1);
-		if (s.find_first_not_of("qwertyuiopasdfghjklzxcvbnmWERTYUIOPASDFGHJKLZXCVBNM 1234567890") == string::npos)
+		s = s.substr(s.find_last_of(":") + 2);
+		if (s.find_first_not_of(_string_signed) == string::npos)
 		{
 			setName(s);
 			cout << "Найдено название оркестра" << endl;
@@ -284,12 +286,12 @@ void  Orchestra::input_from_file(ifstream& fin) {
 		getline(fin, s);
 		getline(fin, s);
 		if (s.find("Количество ударных:") != string::npos) {
-			s = s.substr(s.find_last_of("Количество ударных:") + 1);
-			if (s.find_first_not_of("1234567890") == string::npos)
+			s = s.substr(s.find_last_of(":") + 2);
+			if (s.find_first_not_of(_int_signed) == string::npos)
 			{
 
 				int _length_p = stoi(s);
-				cout << "Найдено " << _length_p << "ударных" << endl;
+				cout << "Найдено " << _length_p << " ударных" << endl;
 				for (int i = 0; i < _length_p; i++) 
 				{
 					Percussion Per;
@@ -304,8 +306,7 @@ void  Orchestra::input_from_file(ifstream& fin) {
 		}
 		else
 			cout << "Не найдено количество ударных" << endl;
-	}
-	
+	}	
 }
 
 void Orchestra::coding_to_file(ofstream& fout) {

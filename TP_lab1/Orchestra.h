@@ -20,8 +20,6 @@ private:
 	Wind* data_w; // духовые
 	int length_w;
 
-	string letters_symbols = "qwertyuiopasdfghjklzxcvbnmWERTYUIOPASDFGHJKLZXCVBNM 1234567890";
-
 public:
 	Orchestra();
 	Orchestra(string, int, int, int);
@@ -42,11 +40,11 @@ public:
 
 	// работа с оркестром
 	void creat_orchestra();
+	void input_from_file(ifstream&);
+	void inputName();
 	void output_console();
 	void output_to_file(ofstream&);
 	void coding_to_file(ofstream&);
-	void input_from_file(ifstream&);
-	void inputName();
 
 	void menu_selecting_type_instrument();
 	void selecting_type_instrument();
@@ -60,8 +58,6 @@ public:
 	
 	int choosing_percussion();
 	void print_percussion();
-	void delite_one_percussion(int);
-
-	
+	void delite_one_percussion(int);	
 };
 

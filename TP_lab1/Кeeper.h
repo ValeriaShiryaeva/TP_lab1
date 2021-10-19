@@ -24,25 +24,22 @@ public:
 	void setLength(int _length) {length = _length; }
 	int getLength() { return length; }
 
+	// Работа с контейнером
 	void creat(); 
 	void memory_allocation(Orchestra&);
 
-	void output_container_console();
-	void output_to_file();
 	void input_from_file();
+	void output_to_console();
+	void output_to_file();
 	void coding_to_file();
-
-	int choosing_orchestra();
-
+	void decoding_to_file();
+	void change_container();
+	void print_menu_change();
 	void delite_container();
 	void print_menu_delite();
 
-	void delite_one_orchestra(int);
-
-	void change_container();
-	void print_menu_change();
-	void print_menu_change_orchestra();
-
-	
+	// Работа с контейнером
+	int choosing_orchestra();
+	void delite_one_orchestra(int);	
 };
 

@@ -13,7 +13,6 @@ private:
 	string name; // название инструмента
 	double cost; // стоимость инструмента
 	string name_owner; // ФИО владельца
-
 	
 public:
 
@@ -45,7 +44,4 @@ public:
 
 	void change();
 	void print_menu_change();
-
-	//кодирование, декодирование
-	void encrip_p();
 };

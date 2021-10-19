@@ -44,13 +44,16 @@
     <Text Include="Zadanie.txt">
       <Filter>Файлы ресурсов</Filter>
     </Text>
-    <Text Include="Save_container.txt">
+    <Text Include="Saved.txt">
       <Filter>Файлы ресурсов</Filter>
     </Text>
-    <Text Include="Extract_container.txt">
+    <Text Include="Input.txt">
       <Filter>Файлы ресурсов</Filter>
     </Text>
-    <Text Include="Coding_container.txt">
+    <Text Include="Coding.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
+    <Text Include="Decoding.txt">
       <Filter>Файлы ресурсов</Filter>
     </Text>
   </ItemGroup>
