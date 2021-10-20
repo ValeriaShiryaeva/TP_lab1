@@ -80,4 +80,18 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Input.doc">
+      <Filter>Файлы ресурсов</Filter>
+    </None>
+    <None Include="Saved.doc">
+      <Filter>Файлы ресурсов</Filter>
+    </None>
+    <None Include="Coding.doc">
+      <Filter>Файлы ресурсов</Filter>
+    </None>
+    <None Include="Decoding.doc">
+      <Filter>Файлы ресурсов</Filter>
+    </None>
+  </ItemGroup>
 </Project>

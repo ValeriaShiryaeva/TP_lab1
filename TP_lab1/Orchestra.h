@@ -42,6 +42,10 @@ public:
 	void creat_orchestra();
 	void input_from_file(ifstream&);
 	void inputName();
+	void inputFaleName(ifstream&);
+	int inputFaleLenght_p(ifstream&);
+	int inputFaleLenght_s(ifstream&);
+	int inputFaleLenght_w(ifstream&);
 	void output_console();
 	void output_to_file(ofstream&);
 	void coding_to_file(ofstream&);
@@ -52,12 +56,21 @@ public:
 	void selecting_delite_instrument();
 
 	// работа с Percussion
-	Percussion& operator[](int index);
+	//Percussion& operator[](int index);
 	void creat_percussion();
 	void memory_allocation_percussion(Percussion&);
 	
 	int choosing_percussion();
 	void print_percussion();
-	void delite_one_percussion(int);	
+	void delite_one_percussion(int);
+
+	// работа с Stringed
+	//Stringed& operator[](int index);
+	void creat_stringed();
+	void memory_allocation_stringed(Stringed&);
+
+	int choosing_stringed();
+	void print_stringed();
+	void delite_one_stringed(int);
 };
 

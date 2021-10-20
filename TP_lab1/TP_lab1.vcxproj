@@ -164,6 +164,12 @@
     <ClInclude Include="Wind.h" />
     <ClInclude Include="Кeeper.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Coding.doc" />
+    <None Include="Decoding.doc" />
+    <None Include="Input.doc" />
+    <None Include="Saved.doc" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

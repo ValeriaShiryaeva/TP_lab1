@@ -1,17 +1,17 @@
 #include "Percussion.h"
 
-int input_number();
 string string_signed = "qwertyuiopasdfghjklzxcvbnmWERTYUIOPASDFGHJKLZXCVBNM 1234567890";
-string double_signed = "1234567890.";
+string double_signed = "1234567890,";
+int input_number();
 
 Percussion::Percussion() : type("uncounted"), name("uncounted"), cost(0), name_owner("uncounted") {
 	cout << "The constructor is called Percussion" << endl;
 }
 
-Percussion::Percussion(string _type, string _name, double _cost, int _quantity, string _name_owner) :
+Percussion::Percussion(string _type, string _name, double _cost, string _name_owner) :
 	type(_type), name(_name), cost(_cost), name_owner(_name_owner) {
 	input_keyboard();
-	cout << "The constructor with parameters is calledPercussion" << endl;
+	cout << "The constructor with parameters is called Percussion" << endl;
 }
 
 Percussion::Percussion(const Percussion& Per) {
@@ -24,20 +24,6 @@ Percussion::Percussion(const Percussion& Per) {
 
 Percussion::~Percussion() {
 	cout << "Destructor called Percussion" << endl;
-}
-
-void Percussion::input_keyboard() {
-	cout << "Введите тип ударного инструмента" << endl;
-	string tmp;
-	getline(cin, tmp); // cinignor сделать почему-то
-	inputType();
-	cout << "Введите название инструмента" << endl;
-	inputName();
-	cout << "Введите цену инструмента" << endl;
-	inputCost();
-	cout << "Введите ФИО владельца" << endl;
-	inputNameOwner();
-	cout << endl;
 }
 
 void Percussion::inputType() {
@@ -98,75 +84,18 @@ void Percussion::inputNameOwner() {
 	}
 }
 
-void Percussion::output_console() {
-	cout << "Тип инструмента: " << getType() << endl;
-	cout << "Название инструмента: " << getName() << endl;
-	cout << "Стоимость иснтрумента: " << getCost() << endl;
-	cout << "ФИО владельца: " << getNameOwer() << endl;
-}
-
-void Percussion::output_to_file(ofstream& fout) {
-	fout << "Тип инструмента: " << getType() << endl;
-	fout << "Название инструмента: " << getName() << endl;
-	fout << "Стоимость иснтрумента: " << getCost() << endl;
-	fout << "ФИО владельца: " << getNameOwer();
-}
-
-void Percussion::change() {
-	print_menu_change();
+void Percussion::input_keyboard() {
 	string tmp;
-	while (1) {
-		int punkt_menu = input_number();
-		if (punkt_menu == 0 || punkt_menu == 1 || punkt_menu == 2 || punkt_menu == 3 || punkt_menu == 4 || punkt_menu == 5)
-		{
-			switch (punkt_menu) // оператор switch 
-			{
-			case 0:
-				cout << "Ничего не изменено" << endl << endl;
-				break;
-			case 1:
-				cout << "Введите новый тип ударного инструмента" << endl;
-				getline(cin, tmp);
-				inputType();
-				cout << "Изменен тип ударного инструмента" << endl << endl;
-				break;
-			case 2:
-				cout << "Введите новое название ударного инструмента" << endl;
-				getline(cin, tmp);
-				inputName();
-				cout << "Изменено название ударного инструмента" << endl << endl;
-				break;
-			case 3:
-				cout << "Введите новую стоимость ударного инструмента" << endl;
-				getline(cin, tmp);
-				inputCost();
-				cout << "Изменена стоимость ударного инструмента" << endl << endl;
-				break;
-			case 4:
-				cout << "Введите новое ФИО владельца ударного инструмента" << endl;
-				getline(cin, tmp);
-				inputNameOwner();
-				cout << "Изменено ФИО владельца ударного инструмента" << endl << endl;
-				break;
-			}
-			if (punkt_menu == 5)
-				break;
-				
-		}
-		else
-			cout << "Введено не верный номер. ";		
-	}
-	
-}
-
-void Percussion::print_menu_change() {
-	cout << "Что хотите изменить? "<< endl;
-	cout << "0. Ничего не изменять" << endl;
-	cout << "1. Тип инструмента" << endl;
-	cout << "2. Название инструмента"  << endl;
-	cout << "3. Стоимость инструмента"  << endl;
-	cout << "4. ФИО владельца"  << endl;
-	cout << "5. Выход в главное меню" << endl;
+	getline(cin, tmp); // cinignor сделать почему-то
+	cout << "Введите тип ударного инструмента" << endl;	
+	inputType();
+	cout << "Введите название инструмента" << endl;
+	inputName();
+	cout << "Введите цену инструмента" << endl;
+	inputCost();
+	cout << "Введите ФИО владельца" << endl;
+	inputNameOwner();
+	cout << endl;
 }
 
 void Percussion::input_from_file(ifstream& fin) {
@@ -213,7 +142,7 @@ void Percussion::input_from_file(ifstream& fin) {
 			{
 				cost = stoi(s);
 				cout << "Считана стоимость ударного иснтурмента" << endl;
-			}				
+			}
 			else
 				cout << "Не верно записана стоимость ударного инструмента" << endl;
 		}
@@ -227,7 +156,7 @@ void Percussion::input_from_file(ifstream& fin) {
 			if (s.find_first_not_of(string_signed) == string::npos) {
 				name_owner = s;
 				cout << "Считано ФИО владельца инструмента" << endl;
-			}				
+			}
 			else
 				cout << "Не верно записано ФИО владельца ударного инструмента" << endl;
 		}
@@ -238,9 +167,77 @@ void Percussion::input_from_file(ifstream& fin) {
 		cout << "Не найдено ни одного ударного" << endl;
 }
 
+void Percussion::output_console() {
+	cout << "Тип инструмента: " << type << endl;
+	cout << "Название инструмента: " << name << endl;
+	cout << "Стоимость иснтрумента: " << cost << endl;
+	cout << "ФИО владельца: " << name_owner << endl;
+}
+
+void Percussion::output_to_file(ofstream& fout) {
+	fout << "Тип инструмента: " << type << endl;
+	fout << "Название инструмента: " << name << endl;
+	fout << "Стоимость иснтрумента: " << cost << endl;
+	fout << "ФИО владельца: " << name_owner << endl;
+}
+
 void Percussion::coding_to_file(ofstream& fout) {
 	fout << encrip("Тип инструмента: ") << encrip(type) << endl;
 	fout << encrip("Название инструмента: ") << encrip(name) << endl;
 	fout << encrip("Стоимость иснтрумента: ") << encrip(to_string(cost)) << endl;
 	fout << encrip("ФИО владельца: ") << encrip(name_owner) << endl;
+}
+
+void Percussion::change() {
+	print_menu_change();
+	string tmp;
+	while (1) {
+		int punkt_menu = input_number();
+		if (punkt_menu >= 0 && punkt_menu <= 5)
+		{
+			switch (punkt_menu) 
+			{
+			case 0:
+				cout << "Ничего не изменено" << endl << endl;
+				break;
+			case 1:
+				cout << "Введите новый тип ударного инструмента" << endl;
+				getline(cin, tmp);
+				inputType();
+				cout << "Изменен тип ударного инструмента" << endl << endl;
+				break;
+			case 2:
+				cout << "Введите новое название ударного инструмента" << endl;
+				getline(cin, tmp);
+				inputName();
+				cout << "Изменено название ударного инструмента" << endl << endl;
+				break;
+			case 3:
+				cout << "Введите новую стоимость ударного инструмента" << endl;
+				getline(cin, tmp);
+				inputCost();
+				cout << "Изменена стоимость ударного инструмента" << endl << endl;
+				break;
+			case 4:
+				cout << "Введите новое ФИО владельца ударного инструмента" << endl;
+				getline(cin, tmp);
+				inputNameOwner();
+				cout << "Изменено ФИО владельца ударного инструмента" << endl << endl;
+				break;
+			}
+			if (punkt_menu == 5)
+				break;		}
+		else
+			cout << "Введен не верный пункт. ";		
+	}
+}
+
+void Percussion::print_menu_change() {
+	cout << "Что хотите изменить? "<< endl;
+	cout << "0. Ничего не изменять" << endl;
+	cout << "1. Тип инструмента" << endl;
+	cout << "2. Название инструмента"  << endl;
+	cout << "3. Стоимость инструмента"  << endl;
+	cout << "4. ФИО владельца"  << endl;
+	cout << "5. Выход в главное меню" << endl;
 }

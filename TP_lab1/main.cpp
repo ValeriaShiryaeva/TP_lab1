@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include<windows.h>
 #include <stdio.h>
 using namespace std;
 
@@ -15,8 +14,6 @@ void menu_output();
 void print_menu_output();
 bool intSigned(const string&);
 int input_number();
-
-ifstream fin("Extract_container.txt"); // вывод данных из файла (восстановление данных из файла)
 
 int main()
 {
@@ -48,7 +45,7 @@ void menu(){
 			break;
 		case 5:
 			if (keeper.getLength() == 0)
-				cout << "Вы не можете удалить контейнет и его содержимое. Контейнер пустой" << endl;
+				cout << "Вы не можете удалить контейнер и его содержимое. Контейнер пустой" << endl;
 			else
 				keeper.delite_container();
 			break;
@@ -69,7 +66,7 @@ void menu(){
 		}
 	} 
 	else
-		cout << "Введен не верный номер. " << endl;	
+		cout << "Введен не верный пункт меню. " << endl;
 }
 
 void print_menu() // вывод меню на экран
@@ -109,7 +106,9 @@ void menu_output() {
 				break;
 			}
 			break;
-		}		
+		}
+		else
+			cout << "Введен не верный номер пункта. ";
 	}	
 }
 
@@ -117,7 +116,7 @@ int input_number() {
 	string number_s;
 	while (1)
 	{
-		cout << "Ведите номер: " << endl;
+		cout << "Введите: " << endl;
 		cin >> number_s;
 		if (intSigned(number_s) == true)
 		{
@@ -129,7 +128,7 @@ int input_number() {
 	}
 }
 
-bool intSigned(const string& s) // проверка на только цифры в сроке
+bool intSigned(const string& s) 
 {
 	if (s.find_first_not_of("0123456789", 0) == string::npos)
 		return true;

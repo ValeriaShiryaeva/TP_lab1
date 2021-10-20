@@ -17,7 +17,7 @@ private:
 public:
 
 	Percussion();
-	Percussion(string, string, double, int, string);
+	Percussion(string, string, double, string);
 	Percussion(const Percussion&);
 	~Percussion();
 

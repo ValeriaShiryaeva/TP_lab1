@@ -38,7 +38,7 @@ public:
 	void delite_container();
 	void print_menu_delite();
 
-	// Работа с контейнером
+	// Работа с оркестром
 	int choosing_orchestra();
 	void delite_one_orchestra(int);	
 };

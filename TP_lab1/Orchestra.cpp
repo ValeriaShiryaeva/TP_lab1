@@ -14,6 +14,9 @@ Orchestra::Orchestra(string _name, int _length_p, int _length_s, int _length_w) 
 	name(_name), length_p(_length_p), length_s(_length_s), length_w(_length_w) {
 	for (int i = 0; i < length_p; i++)
 		creat_percussion();
+	for (int i = 0; i < length_s; i++)
+		creat_stringed();
+
 	cout << "The constructor with parameters is called Orchestra" << endl;
 }
 
@@ -49,10 +52,15 @@ Orchestra::~Orchestra() {
 	cout << "Destructor called Orchestra" << endl;
 }
 
-Percussion& Orchestra::operator[](int index) {
-	if (index >= 0 && index < getLength_p());
-	return data_p[index];
-}
+//Percussion& Orchestra::operator[](int index) {
+//	if (index >= 0 && index < length_p);
+//	return data_p[index];
+//}
+
+//Stringed& Orchestra::operator[](int index) {
+//	if (index >= 0 && index < length_s);
+//	return data_s[index];
+//}
 
 Orchestra& Orchestra::operator=(const Orchestra& Or)
 {
@@ -102,28 +110,173 @@ void Orchestra::inputName() {
 	}
 }
 
+void  Orchestra::input_from_file(ifstream& fin) {
+
+	string s;
+	getline(fin, s);
+	inputFaleName(fin);
+	fin >> s;
+	if (s == "Ударные")
+	{
+		int _length_p = inputFaleLenght_p(fin);
+		if(_length_p != 0)
+		{
+			for (int i = 0; i < _length_p; i++)
+			{
+				cout << "Найдено " << _length_p << " ударных" << endl;
+				Percussion Per;
+				Per.input_from_file(fin);
+				memory_allocation_percussion(Per);
+				cout << "Считан " << i + 1 << " ударный инструмент" << endl;
+			}
+			cout << "Считаны ударные инструменты оркестра" << endl;
+		} 
+		else
+			cout << "Не найдено количество ударных инструментов" << endl;
+	}
+	else
+		cout << "Не найдено ударных инструментов" << endl;
+	fin >> s;
+	if (s == "Струнные")
+	{
+		int _length_s = inputFaleLenght_s(fin);
+		if (_length_s != 0)
+		{
+			for (int i = 0; i < _length_s; i++)
+			{
+				cout << "Найдено " << _length_s << " струнных" << endl;
+				Stringed Str;
+				Str.input_from_file(fin);
+				memory_allocation_stringed(Str);
+				cout << "Считан " << i + 1 << " струнный инструмент" << endl;
+			}
+			cout << "Считаны струнные инструменты оркестра" << endl;
+		}		
+		else
+			cout << "Не найдено количество струнных инструментов" << endl;
+	}
+	else
+		cout << "Не найдено струнных инструментов" << endl;
+}
+
+void Orchestra::inputFaleName(ifstream& fin) {
+	string s;
+	getline(fin, s);
+	if (s.find("Название оркестра:") != string::npos)
+	{
+		s = s.substr(s.find_last_of(":") + 2);
+		if (s.find_first_not_of(_string_signed) == string::npos)
+		{
+			setName(s);
+			cout << "Найдено название оркестра" << endl;
+		}
+		else
+			cout << "Не верно записано название оркестра" << endl;
+	}
+	else
+		cout << "Не найдено название оркестра" << endl;
+}
+
+int Orchestra::inputFaleLenght_p(ifstream& fin) {
+	string s;
+	getline(fin, s);
+	getline(fin, s);
+	if (s.find("Количество ударных:") != string::npos) {
+		s = s.substr(s.find_last_of(":") + 2);
+		if (s.find_first_not_of(_int_signed) == string::npos)
+		{
+			int _length_p = stoi(s);
+			return _length_p;
+		}
+		else
+		{
+			cout << "Не верно записано количество ударных инструментов" << endl;
+			return 0;
+		}
+	}
+	else
+		return 0;	
+}
+
+int Orchestra::inputFaleLenght_s(ifstream& fin) {
+	string s;
+	getline(fin, s);
+	getline(fin, s);
+	if (s.find("Количество струнных:") != string::npos) {
+		s = s.substr(s.find_last_of(":") + 2);
+		if (s.find_first_not_of(_int_signed) == string::npos)
+		{
+			int _length_s = stoi(s);
+			return _length_s;
+		}
+		else
+		{
+			cout << "Не верно записано количество струнных инструментов" << endl;
+			return 0;
+		}
+	}
+	else
+		return 0;
+}
+
 void Orchestra::output_console() {
-	cout << "Инструменты оркестра " << getName() << endl;
+	cout << "Инструменты оркестра " << name << endl;
 	cout << "Ударные" << endl;
-	cout << "Колличество ударных в оркестре: " << getLength_p() << endl;
-	for (int i = 0; i < getLength_p(); i++)
+	cout << "Количество ударных в оркестре: " << length_p << endl;
+	for (int i = 0; i < length_p; i++)
 	{
 		cout << i + 1 << '.' << endl;
 		data_p[i].output_console();
+	}
+
+	cout << "Струнные" << endl;
+	cout << "Количество струнных в оркестре: " << length_s << endl;
+	for (int i = 0; i < length_s; i++)
+	{
+		cout << i + 1 << '.' << endl;
+		data_s[i].output_console();
 	}
 	cout << endl;
 }
 
 void Orchestra::output_to_file(ofstream& fout) {
 	fout << "Название оркестра: " << name << endl;
+
 	fout << "Ударные" << endl;
-	fout << "Колличество ударных: " << length_p << endl;
+	fout << "Количество ударных: " << length_p << endl;
 	for (int i = 0; i < length_p; i++)
 	{
 		fout << "Ударный " << i + 1 << endl;
 		data_p[i].output_to_file(fout);
 	}
-	fout << endl;
+
+	fout << "Струнные" << endl;
+	fout << "Количество струнных: " << length_s << endl;
+	for (int i = 0; i < length_s; i++)
+	{
+		fout << "Струнный " << i + 1 << endl;
+		data_s[i].output_to_file(fout);
+	}
+}
+
+void Orchestra::coding_to_file(ofstream& fout) {
+	fout << encrip("Название оркестра: ") << encrip(name) << endl;
+
+	fout << encrip("Ударные") << endl;
+	fout << encrip("Количество ударных: ") << encrip(to_string(length_p)) << endl;
+	for (int i = 0; i < length_p; i++)
+	{
+		fout << encrip("Ударный ") << encrip(to_string(i + 1)) << endl;
+		data_p[i].coding_to_file(fout);
+	}
+
+	fout << encrip("Струнные") << endl;
+	fout << encrip("Количество струнных: ") << encrip(to_string(length_s)) << endl;
+	for (int i = 0; i < length_s; i++)
+	{
+		fout << encrip("Струнный ") << encrip(to_string(i + 1)) << endl;
+		data_s[i].coding_to_file(fout);
+	}
 }
 
 void Orchestra::selecting_type_instrument() {
@@ -138,12 +291,14 @@ void Orchestra::selecting_type_instrument() {
 				creat_percussion();
 				break;
 			case 2:
+				creat_stringed();
 				break;
 			case 3:
 				break;
 			}
 			break;
 		}
+		cout << "Не верно введен номер типа инструмента" << endl;
 	}
 }
 
@@ -160,14 +315,28 @@ void Orchestra::creat_percussion() {
 	memory_allocation_percussion(Per);
 }
 
+void Orchestra::creat_stringed() {
+	Stringed Str;
+	Str.input_keyboard();
+	memory_allocation_stringed(Str);
+}
+
 void Orchestra::memory_allocation_percussion(Percussion& Per) {
 	Percussion* tmp = data_p;
 	length_p++;
-	cout << length_p << endl;
 	data_p = new Percussion[length_p];
 	for (int i = 0; i < length_p - 1; i++)
 		data_p[i] = tmp[i];
 	data_p[length_p - 1] = Per;
+}
+
+void Orchestra::memory_allocation_stringed(Stringed& Str) {
+	Stringed* tmp = data_s;
+	length_s++;
+	data_s = new Stringed[length_s];
+	for (int i = 0; i < length_s - 1; i++)
+		data_s[i] = tmp[i];
+	data_s[length_s - 1] = Str;
 }
 
 void Orchestra::selecting_change_instrument() {
@@ -179,21 +348,29 @@ void Orchestra::selecting_change_instrument() {
 			switch (punkt_menu) // оператор switch 
 			{
 			case 1:
-				if (getLength_p() == 0)
-					cout << "Количество ударных равно 0, нельзя изменить" << endl;
+				if (length_p == 0)
+					cout << "В этом оркестре нет ударных инструментов" << endl;
 				else
 				{
 					data_p[choosing_percussion() - 1].change();
-					cout << "Инструмент оркеста изменен" << endl;
+					cout << "Ударный инструмент оркеста изменен" << endl;
 				}
 				break;
 			case 2:
+				if (length_s == 0)
+					cout << "В этом оркестре нет струнных инструментов" << endl;
+				else
+				{
+					data_s[choosing_stringed() - 1].change();
+					cout << "Струнный инструмент оркеста изменен" << endl;
+				}
 				break;
 			case 3:
 				break;
 			}
 			break;
 		}
+		cout << "Не верно введен номер типа инструмента" << endl;
 	}
 }
 
@@ -202,10 +379,24 @@ int Orchestra::choosing_percussion() {
 	cout << "Выбор ударного инструмента. ";
 	int number_percussion = input_number();
 	while (1) {
-		if (number_percussion <= getLength_p() && number_percussion != 0)
+		if (number_percussion <= length_p && number_percussion != 0)
 			return number_percussion;
 		else {
 			cout << "Введен неверный номер ударного инструмента. Повторите ввод" << endl;
+			number_percussion = input_number();
+		}
+	}
+}
+
+int Orchestra::choosing_stringed() {
+	print_stringed();
+	cout << "Выбор струнного инструмента. ";
+	int number_percussion = input_number();
+	while (1) {
+		if (number_percussion <= length_s && number_percussion != 0)
+			return number_percussion;
+		else {
+			cout << "Введен неверный номер струнного инструмента. Повторите ввод" << endl;
 			number_percussion = input_number();
 		}
 	}
@@ -217,24 +408,32 @@ void Orchestra::selecting_delite_instrument() {
 		int punkt_menu = input_number();
 		if (punkt_menu == 1 || punkt_menu == 2 || punkt_menu == 3)
 		{
-			switch (punkt_menu) // оператор switch 
+			switch (punkt_menu)
 			{
 			case 1:
-				if (getLength_p() == 0)
-					cout << "Количество ударных равно 0, нельзя удалить" << endl;
+				if (length_p == 0)
+					cout << "В этом оркестре нет ударных инструментов" << endl;
 				else
 				{
 					delite_one_percussion(choosing_percussion() - 1);
-					cout << "Инструмент оркеста удален" << endl;
+					cout << "Ударный инструмент оркеста удален" << endl;
 				}
 				break;
 			case 2:
+				if (length_s == 0)
+					cout << "В этом оркестре нет струнных инструментов" << endl;
+				else
+				{
+					delite_one_stringed(choosing_stringed() - 1);
+					cout << "Струнный инструмент оркеста удален" << endl;
+				}
 				break;
 			case 3:
 				break;
 			}
 			break;
 		}
+		cout << "Не верно введен номер типа инструмента" << endl;
 	}
 }
 
@@ -250,10 +449,22 @@ void Orchestra::delite_one_percussion(int number) {
 	data_p = tmp;
 }
 
+void Orchestra::delite_one_stringed(int number) {
+	Stringed* tmp = new Stringed[length_s - 1];
+	int t = 0;
+	for (int i = 0; i < length_s; i++)
+	{
+		if (i != number)
+			tmp[t++] = data_s[i];
+	}
+	length_s--;
+	data_s = tmp;
+}
+
 void Orchestra::print_percussion() {
 	cout << "Ударные" << endl;
-	cout << "Колличество ударных в оркестре: " << getLength_p() << endl;
-	for (int i = 0; i < getLength_p(); i++)
+	cout << "Колличество ударных в оркестре: " << length_p << endl;
+	for (int i = 0; i < length_p; i++)
 	{
 		cout << i + 1 << '.' << endl;
 		data_p[i].output_console();
@@ -261,62 +472,13 @@ void Orchestra::print_percussion() {
 	cout << endl;
 }
 
-void  Orchestra::input_from_file(ifstream& fin) {
-
-	string s;
-	getline(fin, s);
-	getline(fin, s);
-	if (s.find("Название оркестра:") != string::npos)
+void Orchestra::print_stringed() {
+	cout << "Струнные" << endl;
+	cout << "Колличество струнных в оркестре: " << length_s << endl;
+	for (int i = 0; i < length_s; i++)
 	{
-		s = s.substr(s.find_last_of(":") + 2);
-		if (s.find_first_not_of(_string_signed) == string::npos)
-		{
-			setName(s);
-			cout << "Найдено название оркестра" << endl;
-		}
-		else
-			cout << "Не верно записано название оркестра" << endl;
+		cout << i + 1 << '.' << endl;
+		data_s[i].output_console();
 	}
-	else
-		cout << "Не найдено название оркестра" << endl;
-	
-	fin >> s;
-	if (s == "Ударные")
-	{
-		getline(fin, s);
-		getline(fin, s);
-		if (s.find("Количество ударных:") != string::npos) {
-			s = s.substr(s.find_last_of(":") + 2);
-			if (s.find_first_not_of(_int_signed) == string::npos)
-			{
-
-				int _length_p = stoi(s);
-				cout << "Найдено " << _length_p << " ударных" << endl;
-				for (int i = 0; i < _length_p; i++) 
-				{
-					Percussion Per;
-					Per.input_from_file(fin);
-					memory_allocation_percussion(Per);
-					cout << "Считан" << i + 1 << "ударный инструмент" << endl;
-				}
-			}
-			else
-				cout << "Не верно записано количество ударных инструментов" << endl;
-			cout << "Считаны ударные инструменты оркестра" << endl;
-		}
-		else
-			cout << "Не найдено количество ударных" << endl;
-	}	
-}
-
-void Orchestra::coding_to_file(ofstream& fout) {
-	fout << encrip("Название оркестра: ") << encrip(name) << endl;
-	fout << encrip("Ударные") << endl;
-	fout << encrip("Колличество ударных: ") << encrip(to_string(length_p)) << endl;
-	for (int i = 0; i < length_p; i++)
-	{
-		fout << encrip("Ударный ") << encrip(to_string(i + 1)) << endl;
-		data_p[i].coding_to_file(fout);
-	}
-	fout << endl;
+	cout << endl;
 }
