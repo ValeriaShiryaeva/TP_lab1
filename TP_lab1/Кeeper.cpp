@@ -67,48 +67,53 @@ void Кeeper::input_from_file()
     string name_file;
     cout << "Введите название файла, из которого считать информацию: ";
     cin >> name_file;
-    ifstream fin(name_file);
-    if (!fin)
-        cout << "Файл" << name_file << "не открыт" << endl;
-    else
-    {
-        string s;
-        getline(fin, s);
-        if (s != "Контейнер пустой" && s == "Содержимое контейнера")
+    if (!checkingFileName(name_file)) {
+        ifstream fin(name_file);
+        if (!fin)
+            cout << "Файл " << name_file << " не открыт" << endl;
+        else
         {
+            string s;
             getline(fin, s);
-            if (s.find("Количество оркестров:") != string::npos) {
-                s = s.substr(s.find_last_of(":") + 2);
-                if (s.find_first_not_of(int_signed) == string::npos)
-                {
-                    int _length = stoi(s);
-                    cout << "Найдено " << _length << " оркестров" << endl;
-                    for (int i = 0; i < _length; i++)
+            if (s != "Контейнер пустой" && s == "Содержимое контейнера")
+            {
+                getline(fin, s);
+                if (s.find("Количество оркестров:") != string::npos) {
+                    s = s.substr(s.find_last_of(":") + 2);
+                    if (s.find_first_not_of(int_signed) == string::npos)
                     {
-                        fin >> s;
-                        if (s == "Оркестр")
+                        int _length = stoi(s);
+                        cout << "Найдено " << _length << " оркестров" << endl;
+                        for (int i = 0; i < _length; i++)
                         {
-                            cout << "Найден оркестр " << i + 1 << endl;
-                            Orchestra Or;
-                            Or.input_from_file(fin);
-                            memory_allocation(Or);
-                            cout << "Считан оркестр " << i + 1 << endl;
+                            fin >> s;
+                            if (s == "Оркестр")
+                            {
+                                cout << "Найден оркестр " << i + 1 << endl;
+                                Orchestra Or;
+                                Or.input_from_file(fin);
+                                memory_allocation(Or);
+                                cout << "Считан оркестр " << i + 1 << endl;
+                            }
+                            else
+                                cout << "Не удалось найти ни одного оркестра" << endl;
                         }
-                        else
-                            cout << "Не удалось найти ни одного оркестра" << endl;
                     }
+                    else
+                        cout << "Записано не верное количество оркестров в контейнере" << endl;
                 }
                 else
-                    cout << "Записано не верное количество оркестров в контейнере" << endl;
+                    cout << "Не найдено количество оркестров" << endl;
+                cout << "Данные считаны из файла" << endl;
             }
             else
-                cout << "Не найдено количество оркестров" << endl;
-            cout << "Данные считаны из файла" << endl;
+                cout << "Ничего не удалось считать, измените данные в файле" << endl;
         }
-        else
-            cout << "Ничего не удалось считать, измените данные в файле" << endl;
+        fin.close();
     }
-    fin.close();
+    else
+        cout << "Не верное имя файла или расширение." << endl;
+    
 }
 
 void Кeeper::output_to_console() {
@@ -126,54 +131,62 @@ void Кeeper::output_to_file() {
     string name_file;
     cout << "Введите название файла: ";
     cin >> name_file;
-    ofstream fout;
-    fout.open(name_file);
-    if (!fout)
-		cout << "Файл " << name_file << " не открыт" << endl; 
-    else
-    {
-        if (length == 0)
-            fout << "Контейнер пустой";
-        else 
+    if (checkingFileName(name_file) == true) {
+        ofstream fout;
+        fout.open(name_file);
+        if (!fout)
+            cout << "Файл " << name_file << " не открыт" << endl;
+        else
         {
-            fout << "Содержимое контейнера" << endl;
-            fout << "Количество оркестров: " << length << endl;
-            for (int i = 0; i < length; i++)
+            if (length == 0)
+                fout << "Контейнер пустой";
+            else
             {
-                fout << "Оркестр " << i + 1 << endl;
-                data[i].output_to_file(fout);
+                fout << "Содержимое контейнера" << endl;
+                fout << "Количество оркестров: " << length << endl;
+                for (int i = 0; i < length; i++)
+                {
+                    fout << "Оркестр " << i + 1 << endl;
+                    data[i].output_to_file(fout);
+                }
             }
+            cout << "Данные выведены в файл" << endl;
         }
-        cout << "Данные выведены в файл" << endl;
+        fout.close();
     }
-    fout.close();
+    else
+        cout << "Не верное имя файла или расширение." << endl;
 }
 
 void Кeeper::coding_to_file() {
     string name_file;
     cout << "Введите название файла, куда вывести зашифрованную информацию: ";
     cin >> name_file;
-    ofstream fout;
-    fout.open(name_file);
-    if (!fout)
-        cout << "Файл " << name_file << " не открыт" << endl;
-    else
-    {
-        if (length == 0)
-            fout << encrip("Контейнер пустой");
+    if (checkingFileName(name_file) == true) {
+        ofstream fout;
+        fout.open(name_file);
+        if (!fout)
+            cout << "Файл " << name_file << " не открыт" << endl;
         else
         {
-            fout << encrip("Содержимое контейнера") << endl;
-            fout << encrip("Количество оркестров: ") << encrip(to_string(length)) << endl;
-            for (int i = 0; i < length; i++)
+            if (length == 0)
+                fout << encrip("Контейнер пустой");
+            else
             {
-                fout << encrip("Оркестр ") << encrip(to_string(i + 1)) << endl;
-                data[i].coding_to_file(fout);
+                fout << encrip("Содержимое контейнера") << endl;
+                fout << encrip("Количество оркестров: ") << encrip(to_string(length)) << endl;
+                for (int i = 0; i < length; i++)
+                {
+                    fout << encrip("Оркестр ") << encrip(to_string(i + 1)) << endl;
+                    data[i].coding_to_file(fout);
+                }
             }
+            cout << "Данные выведены в файл" << endl;
         }
-        cout << "Данные выведены в файл" << endl;
+        fout.close();
     }
-    fout.close();
+    else
+        cout << "Не верное имя файла или расширение." << endl;    
 }
 
 void Кeeper::decoding_to_file() {
@@ -183,26 +196,31 @@ void Кeeper::decoding_to_file() {
         cin >> name_file_coding;
         cout << "Введите название файла для расшифрованной информации: ";
         cin >> name_file_decoding;
-        ifstream fin(name_file_coding);
-        ofstream fout;
-        fout.open(name_file_decoding);
-        if (!fin)
-            cout << "Файл " << name_file_coding << " не открыт" << endl;
-        else
+        if (checkingFileName(name_file_coding) == true && checkingFileName(name_file_decoding) == true)
         {
-            if (!fout)
-                cout << "Файл " << name_file_decoding << " не открыт" << endl;
+            ifstream fin(name_file_coding);
+            ofstream fout;
+            fout.open(name_file_decoding);
+            if (!fin)
+                cout << "Файл " << name_file_coding << " не открыт" << endl;
             else
             {
-                string s;
-                while (getline(fin, s))
-                    fout << decrip(s) << endl;
-                cout << "Данные выведены в файл" << endl;
+                if (!fout)
+                    cout << "Файл " << name_file_decoding << " не открыт" << endl;
+                else
+                {
+                    string s;
+                    while (getline(fin, s))
+                        fout << decrip(s) << endl;
+                    cout << "Данные выведены в файл" << endl;
+                }
+                fin.close();
+                fout.close();
+                break;
             }
-            fin.close();
-            fout.close();
-            break;
         }
+        else 
+            cout << "Не верное имя файла или расширение." << endl;
     }
 }
 
@@ -262,8 +280,8 @@ void Кeeper::print_menu_change() {
 }
 
 void Кeeper::delite_container() {
-    print_menu_delite();
     while (1) {
+        print_menu_delite();
         int punkt_menu = input_number();
         if (punkt_menu == 1 || punkt_menu == 2 || punkt_menu == 3 || punkt_menu == 4)
         {
@@ -311,5 +329,18 @@ void Кeeper::delite_one_orchestra(int number) {
     data = tmp;
 }
 
-
+bool Кeeper::checkingFileName(string name_file) {
+    if (name_file.size() < 4 ) {
+        cout << "Имя файла короткое." << endl;
+        return false;
+    }
+    name_file = name_file.substr(name_file.find_last_of(".") + 1);
+    if (name_file == "txt" || name_file == "doc")
+        return true;
+    else
+    {      
+        cout << "Файл должен иметь формат .txt или .doc" << endl;;
+        return false;
+    }
+}
 

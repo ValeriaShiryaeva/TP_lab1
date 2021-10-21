@@ -211,6 +211,8 @@ void Stringed::input_from_file(ifstream& fin) {
 		inputFaleCost(fin);
 		inputFaleDescription(fin);
 	}
+	else
+		cout << "Не найдено ни одного струнного" << endl;
 }
 
 void Stringed::output_console() {
@@ -264,7 +266,7 @@ void Stringed::change() {
 			case 3:
 				cout << "Введите новое наименование производителя струнного инструмента" << endl;
 				getline(cin, tmp);
-				inputNameOwner();
+				inputNameManufacturer();
 				cout << "Изменено наименование производителя струнного инструмента" << endl << endl;
 				break;
 			case 4:
@@ -276,7 +278,7 @@ void Stringed::change() {
 			case 5:
 				cout << "Введите новое краткое описание струнного инструмента" << endl;
 				getline(cin, tmp);
-				inputNameOwner();
+				inputDescription();
 				cout << "Изменено краткое описание струнного инструмента" << endl << endl;
 				break;
 			}
@@ -284,7 +286,7 @@ void Stringed::change() {
 				break;
 		}
 		else
-			cout << "Введен не верный пункт. ";
+			cout << "Введен не верный пункт. Повторите ввод." << endl;
 	}
 }
 

@@ -23,13 +23,13 @@ public:
 	void setNameOwer(string _name_owner) { name_owner = _name_owner; }
 	void setNameManufacturer(string _name_manufacturer) { name_manufacturer = _name_manufacturer; }
 	void setCost(double _cost) { cost = _cost; }
-	void settDescription(string _description) { description = _description; }
+	void setDescription(string _description) { description = _description; }
 
 	string getName() { return name; }
 	string getNameOwer() { return name_owner; }
 	string setNameManufacturer() { return name_manufacturer; }
 	double getCost() { return cost; }
-	string settDescription() { return description; }
+	string getDescription() { return description; }
 
 	void inputName();
 	void inputNameOwner();
@@ -46,8 +46,8 @@ public:
 	void input_keyboard();
 	void input_from_file(ifstream&);
 	void output_console();
-	void output_to_file(ofstream& fout);
-	void coding_to_file(ofstream& fout);
+	void output_to_file(ofstream&);
+	void coding_to_file(ofstream&);
 
 	void change();
 	void print_menu_change();

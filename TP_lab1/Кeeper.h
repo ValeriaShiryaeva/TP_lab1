@@ -24,6 +24,8 @@ public:
 	void setLength(int _length) {length = _length; }
 	int getLength() { return length; }
 
+	bool checkingFileName(string);
+
 	// Работа с контейнером
 	void creat(); 
 	void memory_allocation(Orchestra&);

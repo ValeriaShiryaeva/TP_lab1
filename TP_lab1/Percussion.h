@@ -36,6 +36,11 @@ public:
 	void inputCost();
 	void inputNameOwner();
 
+	void inputFileType(ifstream&);
+	void inputFileName(ifstream&);
+	void inputFileCost(ifstream&);
+	void inputFileNameOwner(ifstream&);
+
 	void input_keyboard();
 	void input_from_file(ifstream&);
 	void output_console();

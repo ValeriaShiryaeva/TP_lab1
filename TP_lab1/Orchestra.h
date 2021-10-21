@@ -72,5 +72,14 @@ public:
 	int choosing_stringed();
 	void print_stringed();
 	void delite_one_stringed(int);
+
+	// работа с Wind
+	//Stringed& operator[](int index);
+	void creat_wind();
+	void memory_allocation_wind(Wind&);
+
+	int choosing_wind();
+	void print_wind();
+	void delite_one_wind(int);
 };
 

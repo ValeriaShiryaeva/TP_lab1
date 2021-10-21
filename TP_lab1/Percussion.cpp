@@ -84,6 +84,78 @@ void Percussion::inputNameOwner() {
 	}
 }
 
+void Percussion::inputFileType(ifstream& fin) {
+	string s;
+	getline(fin, s);
+	getline(fin, s);
+	if (s.find("Тип инструмента:") != string::npos)
+	{
+		s = s.substr(s.find_last_of(":") + 2);
+		if (s.find_first_not_of(string_signed) == string::npos)
+		{
+			setType(s);
+			cout << "Считан тип ударного инструмента" << endl;
+		}
+		else
+			cout << "Не верно записан тип ударного инструмента" << endl;
+	}
+	else
+		cout << "Не найден тип ударного инструмента" << endl;
+}
+
+void Percussion::inputFileName(ifstream& fin) {
+	string s;
+	getline(fin, s);
+	if (s.find("Название инструмента:") != string::npos)
+	{
+		s = s.substr(s.find_last_of(":") + 2);
+		if (s.find_first_not_of(string_signed) == string::npos)
+		{
+			setName(s);
+			cout << "Считано название ударного инструмента" << endl;
+		}
+		else
+			cout << "Не верно записано название ударного инструмента" << endl;
+	}
+	else
+		cout << "Не найдено название ударного инструмента" << endl;
+}
+
+void Percussion::inputFileCost(ifstream& fin) {
+	string s;
+	getline(fin, s);
+	if (s.find("Стоимость инструмента:") != string::npos) {
+		s = s.substr(s.find_last_of(":") + 2);
+		if (s.find_first_not_of("0123456789", 0) == string::npos)
+		{
+			cost = stoi(s);
+			cout << "Считана стоимость ударного иснтурмента" << endl;
+		}
+		else
+			cout << "Не верно записана стоимость ударного инструмента" << endl;
+	}
+	else
+		cout << "Не найдена стоимость ударного инструмента" << endl;
+}
+
+void Percussion::inputFileNameOwner(ifstream& fin) {
+	string s; 
+	getline(fin, s);
+	if (s.find("ФИО владельца:") != string::npos)
+	{
+		s = s.substr(s.find_last_of(":") + 2);
+		if (s.find_first_not_of(string_signed) == string::npos) {
+			name_owner = s;
+			cout << "Считано ФИО владельца инструмента" << endl;
+		}
+		else
+			cout << "Не верно записано ФИО владельца ударного инструмента" << endl;
+	}
+	else
+		cout << "Не найдено ФИО владельца ударного инструмента" << endl;
+}
+
+
 void Percussion::input_keyboard() {
 	string tmp;
 	getline(cin, tmp); // cinignor сделать почему-то
@@ -104,64 +176,10 @@ void Percussion::input_from_file(ifstream& fin) {
 
 	if (s.find("Ударный"))
 	{
-		getline(fin, s);
-		getline(fin, s);
-		if (s.find("Тип инструмента:") != string::npos)
-		{
-			s = s.substr(s.find_last_of(":") + 2);
-			if (s.find_first_not_of(string_signed) == string::npos)
-			{
-				setType(s);
-				cout << "Считан тип ударного инструмента" << endl;
-			}
-			else
-				cout << "Не верно записан тип ударного инструмента" << endl;
-		}
-		else
-			cout << "Не найден тип ударного инструмента" << endl;
-
-		getline(fin, s);
-		if (s.find("Название инструмента:") != string::npos)
-		{
-			s = s.substr(s.find_last_of(":") + 2);
-			if (s.find_first_not_of(string_signed) == string::npos)
-			{
-				setName(s);
-				cout << "Считано название ударного инструмента" << endl;
-			}
-			else
-				cout << "Не верно записано название ударного инструмента" << endl;
-		}
-		else
-			cout << "Не найдено название ударного инструмента" << endl;
-
-		getline(fin, s);
-		if (s.find("Стоимость инструмента:") != string::npos) {
-			s = s.substr(s.find_last_of(":") + 2);
-			if (s.find_first_not_of("0123456789", 0) == string::npos)
-			{
-				cost = stoi(s);
-				cout << "Считана стоимость ударного иснтурмента" << endl;
-			}
-			else
-				cout << "Не верно записана стоимость ударного инструмента" << endl;
-		}
-		else
-			cout << "Не найдена стоимость ударного инструмента" << endl;
-
-		getline(fin, s);
-		if (s.find("ФИО владельца:") != string::npos)
-		{
-			s = s.substr(s.find_last_of(":") + 2);
-			if (s.find_first_not_of(string_signed) == string::npos) {
-				name_owner = s;
-				cout << "Считано ФИО владельца инструмента" << endl;
-			}
-			else
-				cout << "Не верно записано ФИО владельца ударного инструмента" << endl;
-		}
-		else
-			cout << "Не найдено ФИО владельца ударного инструмента" << endl;
+		inputFileType(fin);
+		inputFileName(fin);
+		inputFileCost(fin);
+		inputFileNameOwner(fin);
 	}
 	else
 		cout << "Не найдено ни одного ударного" << endl;
@@ -228,7 +246,7 @@ void Percussion::change() {
 			if (punkt_menu == 5)
 				break;		}
 		else
-			cout << "Введен не верный пункт. ";		
+			cout << "Введен не верный пункт. Повторите ввод." << endl;
 	}
 }
 
