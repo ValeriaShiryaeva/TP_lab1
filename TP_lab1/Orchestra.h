@@ -54,6 +54,7 @@ public:
 	void selecting_type_instrument();
 	void selecting_change_instrument();
 	void selecting_delite_instrument();
+	void selecting_sorting_instrument();
 
 	// работа с Percussion
 	//Percussion& operator[](int index);
@@ -63,6 +64,7 @@ public:
 	int choosing_percussion();
 	void print_percussion();
 	void delite_one_percussion(int);
+	void sorting_percussion();
 
 	// работа с Stringed
 	//Stringed& operator[](int index);
@@ -72,6 +74,7 @@ public:
 	int choosing_stringed();
 	void print_stringed();
 	void delite_one_stringed(int);
+	void sorting_stringed();
 
 	// работа с Wind
 	//Stringed& operator[](int index);
@@ -81,5 +84,6 @@ public:
 	int choosing_wind();
 	void print_wind();
 	void delite_one_wind(int);
+	void sorting_wind();
 };
 

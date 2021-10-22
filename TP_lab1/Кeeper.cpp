@@ -344,3 +344,46 @@ bool Кeeper::checkingFileName(string name_file) {
     }
 }
 
+void Кeeper::menu_sorting() {
+    while (1) {
+        print_menu_sorting();
+        int punkt_menu = input_number();
+        if (punkt_menu == 1 || punkt_menu == 2 || punkt_menu == 3)
+        {
+            switch (punkt_menu)
+            {
+            case 1:
+                sorting_orchestra();
+                cout << "Оркестры отсортированы по названию" << endl;
+                break;
+            case 2:
+                data[choosing_orchestra() - 1].selecting_sorting_instrument();
+                break;
+            }
+            if (punkt_menu == 3)
+                break;
+        }
+        else
+            cout << "Не верно введен номер. ";
+    }
+}
+
+void Кeeper::print_menu_sorting() {
+    cout << "Что Вы хотите отсортировать по алфавиту?" << endl;
+    cout << "1. Сортировать оркестры по названию" << endl;
+    cout << "2. Сортировать инструменты в оркестре по названию" << endl;
+    cout << "3. Выход в главное меню" << endl;
+}
+
+void Кeeper::sorting_orchestra() {
+    Orchestra or1;
+    for (int i = 0; i < length; i++) {
+        for (int j = i + 1; j < length; j++) {
+            if (data[i].getName() > data[j].getName()) {
+                or1 = data[i];
+                data[i] = data[j];
+                data[j] = or1;
+            }
+        }
+    }
+}

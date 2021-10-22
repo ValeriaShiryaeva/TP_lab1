@@ -39,9 +39,12 @@ public:
 	void print_menu_change();
 	void delite_container();
 	void print_menu_delite();
+	void menu_sorting();
+	void print_menu_sorting();
 
 	// Работа с оркестром
 	int choosing_orchestra();
 	void delite_one_orchestra(int);	
+	void sorting_orchestra();
 };
 

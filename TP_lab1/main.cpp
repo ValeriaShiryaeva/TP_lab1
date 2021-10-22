@@ -25,7 +25,7 @@ int main()
 void menu(){
 	print_menu();
 	int punkt_menu = input_number();
-	if (punkt_menu <= 9 && punkt_menu > 0) {
+	if (punkt_menu <= 9 && punkt_menu >= 0) {
 		switch (punkt_menu)
 		{
 		case 1:
@@ -62,6 +62,9 @@ void menu(){
 			keeper.decoding_to_file();
 			break;
 		case 9: 
+			keeper.menu_sorting();
+			break;
+		case 0:
 			exit(0);
 		}
 	} 
@@ -80,13 +83,15 @@ void print_menu() // вывод меню на экран
 	cout << "	6. Изменить содержимое контейнера" << endl;
 	cout << "	7. Закодировать содержимое контейнера в файл" << endl;
 	cout << "	8. Раскодировать содержимое файла в файл" << endl;
-	cout << "	9. Выход из программы" << endl;
+	cout << "	9. Отсортировать содержимое контейнера" << endl;
+	cout << "	0. Выход из программы" << endl;
 }
 
 void print_menu_output() {
 	cout << "Выберите, куда вывести информацию" << endl;
 	cout << "1. В консоль" << endl;
 	cout << "2. В файл" << endl;
+	cout << "3. Выход в главное меню" << endl;
 }
 
 void menu_output() {
@@ -94,7 +99,7 @@ void menu_output() {
 	while (1)
 	{
 		int punkt_menu = input_number();
-		if (punkt_menu == 1 || punkt_menu == 2)
+		if (punkt_menu == 1 || punkt_menu == 2 || punkt_menu == 3)
 		{
 			switch (punkt_menu)
 			{
@@ -105,7 +110,8 @@ void menu_output() {
 				keeper.output_to_file();
 				break;
 			}
-			break;
+			if (punkt_menu == 3)
+				break;
 		}
 		else
 			cout << "Введен не верный номер пункта. ";

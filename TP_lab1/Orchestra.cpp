@@ -9,13 +9,14 @@ Orchestra::Orchestra() : name("no"), length_p(0), length_s(0), length_w(0), data
 	cout << "The constructor is called Orchestra" << endl;
 }
 
- // доделать для 2х других инструментов
 Orchestra::Orchestra(string _name, int _length_p, int _length_s, int _length_w) : 
 	name(_name), length_p(_length_p), length_s(_length_s), length_w(_length_w) {
 	for (int i = 0; i < length_p; i++)
 		creat_percussion();
 	for (int i = 0; i < length_s; i++)
 		creat_stringed();
+	for (int i = 0; i < length_w; i++)
+		creat_wind();
 
 	cout << "The constructor with parameters is called Orchestra" << endl;
 }
@@ -51,16 +52,6 @@ Orchestra::~Orchestra() {
 	length_w = 0;
 	cout << "Destructor called Orchestra" << endl;
 }
-
-//Percussion& Orchestra::operator[](int index) {
-//	if (index >= 0 && index < length_p);
-//	return data_p[index];
-//}
-
-//Stringed& Orchestra::operator[](int index) {
-//	if (index >= 0 && index < length_s);
-//	return data_s[index];
-//}
 
 Orchestra& Orchestra::operator=(const Orchestra& Or)
 {
@@ -139,7 +130,6 @@ void  Orchestra::input_from_file(ifstream& fin) {
 		else
 			cout << "Не найдено ударных инструментов" << endl;
 
-		//fin >> s;
 		if (s == "Струнные")
 		{
 			int _length_s = inputFaleLenght_s(fin);
@@ -161,7 +151,6 @@ void  Orchestra::input_from_file(ifstream& fin) {
 		else
 			cout << "Не найдено струнных инструментов" << endl;
 
-		//fin >> s;
 		if (s == "Духовые")
 		{
 			int _length_w = inputFaleLenght_w(fin);
@@ -358,7 +347,7 @@ void Orchestra::selecting_type_instrument() {
 	while (1) {
 		menu_selecting_type_instrument();
 		int punkt_menu = input_number();
-		if (punkt_menu == 1 || punkt_menu == 2 || punkt_menu == 3)
+		if (punkt_menu == 1 || punkt_menu == 2 || punkt_menu == 3 || punkt_menu == 4)
 		{
 			switch (punkt_menu) 
 			{
@@ -372,9 +361,11 @@ void Orchestra::selecting_type_instrument() {
 				creat_wind();
 				break;
 			}
-			break;
+			if (punkt_menu == 4)
+				break;
 		}
-		cout << "Не верно введен номер типа инструмента" << endl;
+		else
+			cout << "Не верно введен номер типа инструмента" << endl;
 	}
 }
 
@@ -383,6 +374,7 @@ void Orchestra::menu_selecting_type_instrument() {
 	cout << "1. Ударный" << endl;
 	cout << "2. Струнный" << endl;
 	cout << "3. Духовой" << endl;
+	cout << "4. Выход в главное меню" << endl;
 }
 
 void Orchestra::creat_percussion() {
@@ -434,7 +426,7 @@ void Orchestra::selecting_change_instrument() {
 	while (1) {
 		menu_selecting_type_instrument();
 		int punkt_menu = input_number();
-		if (punkt_menu == 1 || punkt_menu == 2 || punkt_menu == 3)
+		if (punkt_menu == 1 || punkt_menu == 2 || punkt_menu == 3 || punkt_menu == 4)
 		{
 			switch (punkt_menu) // оператор switch 
 			{
@@ -466,9 +458,11 @@ void Orchestra::selecting_change_instrument() {
 				}
 				break;
 			}
-			break;
+			if (punkt_menu == 4)
+				break;
 		}
-		cout << "Не верно введен номер типа инструмента" << endl;
+		else
+			cout << "Не верно введен номер типа инструмента" << endl;
 	}
 }
 
@@ -518,7 +512,7 @@ void Orchestra::selecting_delite_instrument() {
 	while (1) {
 		menu_selecting_type_instrument();
 		int punkt_menu = input_number();
-		if (punkt_menu == 1 || punkt_menu == 2 || punkt_menu == 3)
+		if (punkt_menu == 1 || punkt_menu == 2 || punkt_menu == 3 || punkt_menu == 4)
 		{
 			switch (punkt_menu)
 			{
@@ -550,9 +544,11 @@ void Orchestra::selecting_delite_instrument() {
 				}
 				break;
 			}
-			break;
+			if(punkt_menu == 4)
+				break;
 		}
-		cout << "Не верно введен номер типа инструмента" << endl;
+		else
+			cout << "Не верно введен номер типа инструмента" << endl;
 	}
 }
 
@@ -623,4 +619,93 @@ void Orchestra::print_wind() {
 		data_w[i].output_console();
 	}
 	cout << endl;
+}
+
+void Orchestra::selecting_sorting_instrument() {
+	while (1) {
+		menu_selecting_type_instrument();
+		int punkt_menu = input_number();
+		if (punkt_menu == 1 || punkt_menu == 2 || punkt_menu == 3 || punkt_menu == 4)
+		{
+			switch (punkt_menu)
+			{
+			case 1:
+				if (length_p == 1)
+					cout << "В этом оркестре один ударный инструмент, сортировка не требется." << endl;
+				if (length_p == 0)
+					cout << "В этом оркестре нет ударных инструментов" << endl;
+				else
+				{
+					sorting_percussion();
+					cout << "Ударные инструменты отсортированы по названию" << endl;
+				}
+				break;
+			case 2:
+				if (length_s == 1)
+					cout << "В этом оркестре один струнный инструмент, сортировка не требется." << endl;
+				if (length_s == 0)
+					cout << "В этом оркестре нет струнных инструментов" << endl;
+				else
+				{
+					sorting_stringed();
+					cout << "Струнные инструменты отсортированы по названию" << endl;
+				}
+				break;
+			case 3:
+				if (length_w == 1)
+					cout << "В этом оркестре один духовой инструмент, сортировка не требется." << endl;
+				if (length_w == 0)
+					cout << "В этом оркестре нет духовых инструментов" << endl;
+				else
+				{
+					sorting_wind();
+					cout << "Духовые инструменты отсортированы по названию" << endl;
+				}
+				break;
+			}
+			if(punkt_menu == 4)
+				break;
+		}
+		else
+			cout << "Не верно введен номер типа инструмента" << endl;
+	}
+}
+
+void Orchestra::sorting_percussion() {
+	Percussion Per;
+	for (int i = 0; i < length_p; i++) {
+		for (int j = i + 1; j < length_p; j++) {
+			if (data_p[i].getName() > data_p[j].getName()) {
+				Per = data_p[i];
+				data_p[i] = data_p[j];
+				data_p[j] = Per;
+			}
+		}
+	}
+}
+
+void Orchestra::sorting_stringed() {
+	Stringed Str;
+	for (int i = 0; i < length_s; i++) {
+		for (int j = i + 1; j < length_s; j++) {
+			if (data_s[i].getName() > data_s[j].getName()) {
+				Str = data_s[i];
+				data_s[i] = data_s[j];
+				data_s[j] = Str;
+			}
+		}
+	}
+}
+
+void Orchestra::sorting_wind() {
+	Wind Win;
+	for (int i = 0; i < length_w; i++) {
+		for (int j = i + 1; j < length_w; j++) {
+			if (data_w[i].getName() > data_w[j].getName()) {
+				Win = data_w[i];
+				data_w[i] = data_w[j];
+				data_w[j] = Win;
+			}
+		}
+	}
 }
