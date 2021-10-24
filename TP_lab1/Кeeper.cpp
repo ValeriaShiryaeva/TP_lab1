@@ -30,7 +30,7 @@ string int_signed = "123456789";
 }
 
 Orchestra& Кeeper::operator[](int index) {
-    if(index >= 0 && index < length);
+    if(index >= 0 && index < length)
         return data[index];
 }
 
@@ -66,8 +66,9 @@ void Кeeper::input_from_file()
 {
     string name_file;
     cout << "Введите название файла, из которого считать информацию: ";
-    cin >> name_file;
-    if (!checkingFileName(name_file)) {
+    getline(cin, name_file);
+    getline(cin, name_file);
+    if (checkingFileName(name_file) == true) {
         ifstream fin(name_file);
         if (!fin)
             cout << "Файл " << name_file << " не открыт" << endl;
@@ -84,10 +85,10 @@ void Кeeper::input_from_file()
                     {
                         int _length = stoi(s);
                         cout << "Найдено " << _length << " оркестров" << endl;
+                        fin >> s;
                         for (int i = 0; i < _length; i++)
                         {
-                            fin >> s;
-                            if (s == "Оркестр")
+                            if (s == "Оркестр" )
                             {
                                 cout << "Найден оркестр " << i + 1 << endl;
                                 Orchestra Or;
@@ -130,7 +131,8 @@ void Кeeper::output_to_console() {
 void Кeeper::output_to_file() {
     string name_file;
     cout << "Введите название файла: ";
-    cin >> name_file;
+    getline(cin, name_file);
+    getline(cin, name_file);
     if (checkingFileName(name_file) == true) {
         ofstream fout;
         fout.open(name_file);
@@ -161,7 +163,8 @@ void Кeeper::output_to_file() {
 void Кeeper::coding_to_file() {
     string name_file;
     cout << "Введите название файла, куда вывести зашифрованную информацию: ";
-    cin >> name_file;
+    getline(cin, name_file);
+    getline(cin, name_file);
     if (checkingFileName(name_file) == true) {
         ofstream fout;
         fout.open(name_file);
@@ -193,9 +196,10 @@ void Кeeper::decoding_to_file() {
     string name_file_coding, name_file_decoding;
     while (1) {
         cout << "Введите название файла с зашифрованной информацией: ";
-        cin >> name_file_coding;
+        getline(cin, name_file_coding);
+        getline(cin, name_file_coding);
         cout << "Введите название файла для расшифрованной информации: ";
-        cin >> name_file_decoding;
+        getline(cin, name_file_decoding);
         if (checkingFileName(name_file_coding) == true && checkingFileName(name_file_decoding) == true)
         {
             ifstream fin(name_file_coding);

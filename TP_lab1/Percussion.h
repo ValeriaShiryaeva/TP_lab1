@@ -44,8 +44,8 @@ public:
 	void input_keyboard();
 	void input_from_file(ifstream&);
 	void output_console();
-	void output_to_file(ofstream& fout);
-	void coding_to_file(ofstream& fout);
+	void output_to_file(ofstream&);
+	void coding_to_file(ofstream&);
 
 	void change();
 	void print_menu_change();

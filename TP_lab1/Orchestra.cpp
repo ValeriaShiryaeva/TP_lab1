@@ -307,7 +307,7 @@ void Orchestra::output_to_file(ofstream& fout) {
 	}
 
 	fout << "Духовые" << endl;
-	fout << "Количество духовые: " << length_w << endl;
+	fout << "Количество духовых: " << length_w << endl;
 	for (int i = 0; i < length_w; i++)
 	{
 		fout << "Духовой " << i + 1 << endl;
@@ -339,7 +339,7 @@ void Orchestra::coding_to_file(ofstream& fout) {
 	for (int i = 0; i < length_w; i++)
 	{
 		fout << encrip("Духовой ") << encrip(to_string(i + 1)) << endl;
-		data_w[i].output_to_file(fout);
+		data_w[i].coding_to_file(fout);
 	}	
 }
 
